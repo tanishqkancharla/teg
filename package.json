@@ -1,0 +1,28 @@
+{
+  "name": "teg",
+  "author": "Tanishq Kancharla",
+  "version": "0.0.1",
+  "description": "A tiny parser framework",
+  "type": "module",
+  "source": "src/index.ts",
+  "exports": {
+    "require": "./dist/teg.cjs",
+    "default": "./dist/teg.modern.js"
+  },
+  "main": "./dist/teg.cjs",
+  "module": "./dist/teg.module.js",
+  "unpkg": "./dist/teg.umd.js",
+  "scripts": {
+    "build": "microbundle",
+    "dev": "microbundle watch",
+    "test": "jest --verbose"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.5.0",
+    "jest": "^28.1.0",
+    "microbundle": "^0.15.0",
+    "ts-jest": "^28.0.1",
+    "ts-node": "^10.7.0"
+  },
+  "license": "MIT"
+}
