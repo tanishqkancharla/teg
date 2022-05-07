@@ -240,7 +240,7 @@ export const not = <T>(parser: Parser<T>): Parser<string> =>
 		}
 	});
 
-export const takeUntilAfter = <T>(parser: Parser<T>): Parser<string[]> =>
-	suffix(zeroOrMore(not(parser)), parser);
+export const takeUntilAfter = <T>(parser: Parser<T>): Parser<string> =>
+	suffix(zeroOrMore(not(parser)), parser).map(concat);
 
-export const line = takeUntilAfter(char("\n")).map(concat);
+export const line = takeUntilAfter(char("\n"));

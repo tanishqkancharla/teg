@@ -120,6 +120,9 @@ it.todo("between");
 
 it.todo("prefix");
 
+it.todo("suffix");
+it.todo("takeUntilAfter");
+
 describe("line", () => {
 	it("works", () => {
 		const result = line.run("a sentence\n");

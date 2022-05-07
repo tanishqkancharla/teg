@@ -1,3 +1,5 @@
+import type { Parser } from "./Parser";
+import type { ParseFailure, ParseResult, ParseSuccess } from "./ParseResult";
 import {
 	between,
 	logResult,
@@ -28,4 +30,8 @@ export {
 	between,
 	prefix,
 	suffix,
+	Parser,
+	ParseFailure,
+	ParseResult,
+	ParseSuccess,
 };
