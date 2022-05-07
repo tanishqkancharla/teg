@@ -1,5 +1,6 @@
 import type { Parser } from "./Parser";
 import type { ParseFailure, ParseResult, ParseSuccess } from "./ParseResult";
+import type { ParserStream } from "./ParserStream";
 import {
 	between,
 	logResult,
@@ -34,4 +35,5 @@ export {
 	ParseFailure,
 	ParseResult,
 	ParseSuccess,
+	ParserStream,
 };
