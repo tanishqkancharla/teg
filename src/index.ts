@@ -3,6 +3,8 @@ import type { ParseFailure, ParseResult, ParseSuccess } from "./ParseResult";
 import type { ParserStream } from "./ParserStream";
 import {
 	between,
+	isParseFailure,
+	isParseSuccess,
 	logResult,
 	lookahead,
 	maybe,
@@ -14,6 +16,7 @@ import {
 	sequence,
 	str,
 	suffix,
+	takeUntilAfter,
 	zeroOrMore,
 } from "./parseUtils";
 
@@ -31,9 +34,12 @@ export {
 	between,
 	prefix,
 	suffix,
+	takeUntilAfter,
 	Parser,
 	ParseFailure,
 	ParseResult,
 	ParseSuccess,
 	ParserStream,
+	isParseFailure,
+	isParseSuccess,
 };
