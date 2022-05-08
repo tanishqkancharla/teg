@@ -2,8 +2,12 @@
 
 Teg is a tiny parser framework written in Typescript. It aims to be a semantic and approachable library for parsing.
 
+```sh
+npm install teg-parser
+```
+
 ```ts
-import { prefix, str, line } from "teg"
+import { prefix, str, line } from "teg-parser"
 
 /** Parse markdown level 1 headings */
 const h1Parser = prefix(str("# "), line);
@@ -16,7 +20,7 @@ console.log(result.content) // Prints "heading"
 Often, you'll want to do some processing on a successful parse. To make this ergonomic, parsers define a `map` function that will let you transform successfully parsed content.
 
 ```ts
-import {sequence, str, maybe, line, takeUntilAfter } from "teg"
+import {sequence, str, maybe, line, takeUntilAfter } from "teg-parser"
 
 type CodeBlockToken = {
   lang: string | undefined

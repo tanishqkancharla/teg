@@ -1,18 +1,20 @@
 {
-	"name": "teg",
+	"name": "teg-parser",
 	"author": "Tanishq Kancharla",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "A tiny parser framework",
 	"type": "module",
 	"source": "src/index.ts",
-	"exports": {
-		"require": "./dist/teg.cjs",
-		"default": "./dist/teg.modern.js"
-	},
-	"main": "./dist/teg.cjs",
-	"module": "./dist/teg.module.js",
-	"unpkg": "./dist/teg.umd.js",
+	"module": "dist/teg.cjs",
+	"main": "dist/teg.cjs",
 	"types": "dist/index.d.ts",
+	"exports": {
+		".": "./dist/teg.cjs"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/tanishqkancharla/teg.git"
+	},
 	"scripts": {
 		"build": "microbundle",
 		"dev": "microbundle watch",
