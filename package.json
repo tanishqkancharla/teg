@@ -1,31 +1,35 @@
 {
 	"name": "teg-parser",
-	"author": "Tanishq Kancharla",
-	"version": "0.0.2",
+	"version": "0.0.3",
+	"author": "Tanishq Kancharla <tanishqkancharla3@gmail.com>",
 	"description": "A tiny parser framework",
-	"type": "module",
-	"source": "src/index.ts",
-	"module": "dist/teg.cjs",
-	"main": "dist/teg.cjs",
-	"types": "dist/index.d.ts",
-	"exports": {
-		".": "./dist/teg.cjs"
-	},
+	"keywords": [
+		"parser",
+		"PEG",
+		"parser expression grammer",
+		"toolkit",
+		"types"
+	],
+	"license": "MIT",
+	"main": "build/index.js",
+	"files": [
+		"build/*"
+	],
 	"repository": {
-		"type": "git",
-		"url": "git://github.com/tanishqkancharla/teg.git"
+		"url": "https://github.com/tanishqkancharla/teg"
 	},
 	"scripts": {
-		"build": "microbundle",
-		"dev": "microbundle watch",
+		"typecheck": "tsc --noEmit",
+		"build": "tsc",
+		"clean": "rm -rf build",
+		"watch": "tsc --watch",
+		"release": "npm run clean && npm run build ** npm publish",
 		"test": "jest --verbose"
 	},
 	"devDependencies": {
 		"@types/jest": "^27.5.0",
 		"jest": "^28.1.0",
-		"microbundle": "^0.15.0",
-		"ts-jest": "^28.0.1",
-		"ts-node": "^10.7.0"
+		"typescript": "^4.6.4"
 	},
-	"license": "MIT"
+	"dependencies": {}
 }
