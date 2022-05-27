@@ -3,12 +3,15 @@ import { ParseFailure, ParseResult, ParseSuccess } from "./ParseResult";
 import { ParserStream } from "./ParserStream";
 import {
 	between,
+	char,
 	isParseFailure,
 	isParseSuccess,
+	line,
 	logResult,
 	lookahead,
 	maybe,
 	nOrMore,
+	not,
 	notChars,
 	oneOf,
 	oneOrMore,
@@ -42,4 +45,7 @@ export {
 	ParserStream,
 	isParseFailure,
 	isParseSuccess,
+	line,
+	not,
+	char,
 };

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isParseSuccess = exports.isParseFailure = exports.ParserStream = exports.ParseSuccess = exports.ParseFailure = exports.Parser = exports.takeUntilAfter = exports.suffix = exports.prefix = exports.between = exports.maybe = exports.lookahead = exports.sequence = exports.oneOf = exports.oneOrMore = exports.zeroOrMore = exports.nOrMore = exports.notChars = exports.logResult = exports.str = void 0;
+exports.line = exports.isParseSuccess = exports.isParseFailure = exports.ParserStream = exports.ParseSuccess = exports.ParseFailure = exports.Parser = exports.takeUntilAfter = exports.suffix = exports.prefix = exports.between = exports.maybe = exports.lookahead = exports.sequence = exports.oneOf = exports.oneOrMore = exports.zeroOrMore = exports.nOrMore = exports.notChars = exports.logResult = exports.str = void 0;
 const Parser_1 = require("./Parser");
 Object.defineProperty(exports, "Parser", { enumerable: true, get: function () { return Parser_1.Parser; } });
 const ParseResult_1 = require("./ParseResult");
@@ -12,6 +12,7 @@ const parseUtils_1 = require("./parseUtils");
 Object.defineProperty(exports, "between", { enumerable: true, get: function () { return parseUtils_1.between; } });
 Object.defineProperty(exports, "isParseFailure", { enumerable: true, get: function () { return parseUtils_1.isParseFailure; } });
 Object.defineProperty(exports, "isParseSuccess", { enumerable: true, get: function () { return parseUtils_1.isParseSuccess; } });
+Object.defineProperty(exports, "line", { enumerable: true, get: function () { return parseUtils_1.line; } });
 Object.defineProperty(exports, "logResult", { enumerable: true, get: function () { return parseUtils_1.logResult; } });
 Object.defineProperty(exports, "lookahead", { enumerable: true, get: function () { return parseUtils_1.lookahead; } });
 Object.defineProperty(exports, "maybe", { enumerable: true, get: function () { return parseUtils_1.maybe; } });
