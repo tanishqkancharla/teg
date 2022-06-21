@@ -8,7 +8,7 @@ import { isParseFailure } from "./parseUtils";
  */
 export const not = <T>(parser: Parser<T>): Parser<string> =>
 	new Parser((stream) => {
-		if (stream.isEmpty) {
+		if (stream.isEmpty()) {
 			return new ParseFailure("Stream was emptied", stream);
 		}
 		const result = parser.run(stream);

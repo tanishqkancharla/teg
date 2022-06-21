@@ -2,7 +2,7 @@ export class ParserStream {
 	index: number;
 	private length: number;
 
-	get isEmpty() {
+	isEmpty() {
 		return this.length === 0;
 	}
 
@@ -13,7 +13,7 @@ export class ParserStream {
 
 	// Get the first value from the iterable.
 	head() {
-		if (this.isEmpty) {
+		if (this.isEmpty()) {
 			throw new TypeError("Stream was emptied");
 		}
 		return this.content[this.index];
@@ -47,7 +47,7 @@ export class ParserStream {
 		return { content: this.content.replace(/\n/g, "\\n"), marker };
 	}
 
-	get rest() {
+	restOfStream() {
 		return this.content.slice(this.index);
 	}
 }
