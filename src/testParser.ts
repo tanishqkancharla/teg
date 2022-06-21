@@ -1,27 +1,65 @@
 import { assert, assertEqual } from "./assertUtils";
 import { Parser } from "./Parser";
-import { isParseSuccess, logResult } from "./parseUtils";
+import { isParseFailure, isParseSuccess, logResult } from "./parseUtils";
 
 export function testParser<T>(
 	name: string,
 	parser: Parser<T>,
-	content: `\n${string}`,
-	expected: T
+	content: string,
+	expected: T,
+	isEmptyOk = false
 ) {
 	it(name, () => {
-		const result = parser.run(content.trimStart());
+		const result = parser.run(content);
 
 		assert.ok(
 			isParseSuccess(result),
-			`PARSING TEST FAILED: \n${logResult(result)}
-        `
-		);
-		assert.ok(
-			result.stream.isEmpty,
-			`PARSING TEST FAILED:
-Ending stream was nonempty:
+			`Parsing test ${name} failed:
 ${logResult(result)}`
 		);
+
+		if (!isEmptyOk) {
+			assert.ok(
+				result.stream.isEmpty,
+				`Parsing test "${name}" failed:
+  Ending stream was nonempty:
+  ${logResult(result)}`
+			);
+		}
+
 		assertEqual(result.value, expected);
 	});
 }
+
+testParser.todo = <T>(
+	name: string,
+	parser?: Parser<T>,
+	content?: string,
+	expected?: T
+) => {
+	it.todo(name);
+};
+
+export function testParserFails<T>(
+	name: string,
+	parser: Parser<T>,
+	content: string
+) {
+	it(name, () => {
+		const result = parser.run(content);
+
+		assert.ok(
+			isParseFailure(result),
+			`Parsing test ${name} succeeded when it was supposed to fail:
+${logResult(result)}`
+		);
+	});
+}
+
+testParserFails.todo = <T>(
+	name: string,
+	parser?: Parser<T>,
+	content?: string
+) => {
+	it.todo(name);
+};

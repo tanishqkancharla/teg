@@ -1,32 +1,23 @@
+import { between, prefix, suffix } from "./between";
+import { char } from "./char";
+import { lookahead } from "./lookahead";
+import { maybe } from "./maybe";
+import { nOrMore, oneOrMore, zeroOrMore } from "./nOrMore";
+import { not } from "./not";
+import { oneOf } from "./oneOf";
 import { Parser } from "./Parser";
 import { ParseFailure, ParseResult, ParseSuccess } from "./ParseResult";
 import { ParserStream } from "./ParserStream";
-import {
-	between,
-	char,
-	isParseFailure,
-	isParseSuccess,
-	line,
-	logResult,
-	lookahead,
-	maybe,
-	nOrMore,
-	not,
-	notChars,
-	oneOf,
-	oneOrMore,
-	prefix,
-	sequence,
-	str,
-	suffix,
-	takeUntilAfter,
-	zeroOrMore,
-} from "./parseUtils";
+import { isParseFailure, isParseSuccess, logResult } from "./parseUtils";
+import { sequence } from "./sequence";
+import { line, takeUntilAfter } from "./takeUntilAfter";
+
+import { str } from "./str";
+import { testParser } from "./testParser";
 
 export {
 	str,
 	logResult,
-	notChars,
 	nOrMore,
 	zeroOrMore,
 	oneOrMore,
@@ -48,4 +39,5 @@ export {
 	line,
 	not,
 	char,
+	testParser,
 };

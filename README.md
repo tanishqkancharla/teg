@@ -69,6 +69,19 @@ Since it's written in typescript, types are inferred as much as possible.
 
 Much of the idea comes from [Chet Corcos's article on parsers](https://medium.com/@chetcorcos/introduction-to-parsers-644d1b5d7f3d). Although `Parser`s currently implement `bimap`, `fold`, and `chain` methods as described in the article, I haven't found them as useful in real-world usage, and may remove them or change them.
 
+## Testing parsers
+
+Teg ships a utility to test parsers. Its signature is:
+
+```tsx
+export function testParser<T>(
+	name: string,
+	parser: Parser<T>,
+	content: string,
+	expected: T
+)
+```
+
 ## Name
 
 (**T**iny or **T**yped)  Parser **E**xpression **G**rammer
