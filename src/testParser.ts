@@ -7,7 +7,7 @@ export function testParser<T>(
 	parser: Parser<T>,
 	content: string,
 	expected: T,
-	isEmptyOk = false
+	assertEmpty = true
 ) {
 	it(name, () => {
 		const result = parser.run(content);
@@ -18,7 +18,7 @@ export function testParser<T>(
 ${logResult(result)}`
 		);
 
-		if (!isEmptyOk) {
+		if (assertEmpty) {
 			assert.ok(
 				result.stream.isEmpty,
 				`Parsing test "${name}" failed:

@@ -13,7 +13,6 @@ import { sequence } from "./sequence";
 import { line, takeUntilAfter } from "./takeUntilAfter";
 
 import { str } from "./str";
-import { testParser } from "./testParser";
 
 export {
 	str,
@@ -39,5 +38,4 @@ export {
 	line,
 	not,
 	char,
-	testParser,
 };

@@ -25,7 +25,7 @@ export class Parser<K> {
 	}
 
 	/** Combine parsers together in sequence */
-	chain<T>(fn: (val: K) => Parser<T>) {
+	chain<T>(fn: (val: K) => Parser<T>): Parser<T> {
 		return new Parser((stream) =>
 			this.parseFn(stream).chain((val, stream) => fn(val).run(stream))
 		);

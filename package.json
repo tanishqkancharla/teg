@@ -24,7 +24,8 @@
 		"clean": "rm -rf build",
 		"watch": "tsc --watch",
 		"release": "npm run clean; npm run build; npm publish",
-		"test": "jest"
+		"test": "jest",
+		"bundlesize": "esbuild src/index.ts --outfile=out.js --bundle --minify; rm out.js"
 	},
 	"devDependencies": {
 		"@types/jest": "^27.5.0",

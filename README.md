@@ -71,14 +71,15 @@ Much of the idea comes from [Chet Corcos's article on parsers](https://medium.co
 
 ## Testing parsers
 
-Teg ships a utility to test parsers. Its signature is:
+Teg ships a utility to test parsers at "teg-parser/testParser". Its signature is:
 
 ```tsx
 export function testParser<T>(
 	name: string,
 	parser: Parser<T>,
 	content: string,
-	expected: T
+	expected: T,
+  assertEmpty = true
 )
 ```
 
