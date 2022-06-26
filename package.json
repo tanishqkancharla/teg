@@ -1,6 +1,6 @@
 {
 	"name": "teg-parser",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"author": "Tanishq Kancharla <tanishqkancharla3@gmail.com>",
 	"description": "A tiny parser framework",
 	"keywords": [
