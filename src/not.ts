@@ -4,9 +4,9 @@ import { isParseFailure } from "./parseUtils";
 
 /**
  * Matches if the given parser fails.
- * Consumes a single character.
+ * Consumes a single character if it matches.
  */
-export const not = <T>(parser: Parser<T>): Parser<string> =>
+export const not = (parser: Parser<any>): Parser<string> =>
 	new Parser((stream) => {
 		if (stream.isEmpty()) {
 			return new ParseFailure("Stream was emptied", stream);

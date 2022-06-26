@@ -11,6 +11,8 @@ describe("nOrMore", () => {
 	testParser("works when n is equal", parser, "aaa", ["a", "a", "a"]);
 
 	testParserFails("fails when n is less", parser, "aa");
+
+	testParser.todo("Works when delimited");
 });
 
 describe("zeroOrMore", () => {
@@ -28,5 +30,7 @@ describe("zeroOrMore", () => {
 		testParser("works", parser, "abba", ["abba"]);
 
 		testParser("succeeds when empty", parser, "", []);
+
+		testParser.todo("Works when delimited");
 	});
 });

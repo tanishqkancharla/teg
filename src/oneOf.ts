@@ -2,7 +2,7 @@ import { Parser } from "./Parser";
 import { ParseFailure, ParseSuccess } from "./ParseResult";
 
 /** Matches exactly one of the given parsers */
-export const oneOf = <ParserArray extends readonly Parser<any>[]>(
+export const oneOf = <ParserArray extends Parser<any>[]>(
 	parsers: ParserArray
 ): ParserArray[number] =>
 	new Parser((stream) => {

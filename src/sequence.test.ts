@@ -1,23 +1,15 @@
-import { assert, assertEqual } from "./assertUtils";
 import { char } from "./char";
-import { isParseFailure, isParseSuccess } from "./parseUtils";
 import { sequence } from "./sequence";
+import { testParser, testParserFails } from "./testParser";
 
 describe("sequence", () => {
 	const parser = sequence([char("a"), char("b"), char("c")]);
 
-	it("works", () => {
-		const result = parser.run("abc");
+	testParser("works", parser, "abc", ["a", "b", "c"]);
 
-		assert.ok(isParseSuccess(result));
+	testParserFails("fails", parser, "bac");
 
-		const { value } = result;
-		assertEqual(value, ["a", "b", "c"]);
-	});
+	testParser.todo("Works when given delimiter");
 
-	it("fails", () => {
-		const result = parser.run("bac");
-
-		assert.ok(isParseFailure(result));
-	});
+	testParser.todo("Fails when delimiter doesn't match");
 });

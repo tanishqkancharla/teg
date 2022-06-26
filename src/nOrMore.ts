@@ -2,7 +2,11 @@ import { Parser } from "./Parser";
 import { ParseFailure, ParseSuccess } from "./ParseResult";
 import { isParseSuccess } from "./parseUtils";
 
-export const nOrMore = <T>(n: number, parser: Parser<T>): Parser<T[]> =>
+export const nOrMore = <T, D = never>(
+	n: number,
+	parser: Parser<T>,
+	delimiter?: Parser<D>
+): Parser<T[]> =>
 	new Parser((stream) => {
 		const values: T[] = [];
 		let errVal: string;
@@ -11,8 +15,21 @@ export const nOrMore = <T>(n: number, parser: Parser<T>): Parser<T[]> =>
 			let result = parser.run(stream);
 
 			if (isParseSuccess(result)) {
-				values.push(result.value);
-				stream = result.stream;
+				const { value, stream: newStream } = result;
+				values.push(value);
+				stream = newStream;
+
+				if (delimiter) {
+					const afterDelimResult = delimiter.run(newStream);
+
+					if (afterDelimResult instanceof ParseSuccess) {
+						stream = afterDelimResult.stream;
+					} else {
+						errVal = `Could not parse delimiter after ${values.length} values:
+${afterDelimResult.value}`;
+						break;
+					}
+				}
 			} else {
 				errVal = result.value;
 				break;
@@ -30,5 +47,8 @@ ${errVal}`,
 		return new ParseSuccess(values, stream);
 	});
 
-export const zeroOrMore = <T>(parser: Parser<T>) => nOrMore(0, parser);
-export const oneOrMore = <T>(parser: Parser<T>) => nOrMore(1, parser);
+export const zeroOrMore = <T, D>(parser: Parser<T>, delimiter?: Parser<D>) =>
+	nOrMore(0, parser, delimiter);
+
+export const oneOrMore = <T, D>(parser: Parser<T>, delimiter?: Parser<D>) =>
+	nOrMore(1, parser, delimiter);
