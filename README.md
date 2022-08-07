@@ -6,7 +6,7 @@ Teg is a tiny declarative parser toolkit written in Typescript. It aims to be a 
 
 * 0 dependencies
 * Browser or Node
-* 2Kb minified
+* 2kb minified (but highly tree-shakeable)
 * Well-tested
 * Straightforward and semantic by default
 * But also powerful and composable API.
