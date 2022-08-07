@@ -11,7 +11,7 @@ export const nOrMore = <T, D = never>(
 		const values: T[] = [];
 		let errVal: string;
 
-		while (true || stream.isEmpty) {
+		while (true || !stream.isEmpty) {
 			let result = parser.run(stream);
 
 			if (isParseSuccess(result)) {

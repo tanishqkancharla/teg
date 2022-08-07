@@ -3,29 +3,13 @@ import { char } from "./char";
 import { maybe } from "./maybe";
 import { isParseSuccess } from "./parseUtils";
 import { line } from "./takeUntilAfter";
+import { testParser } from "./testParser";
 
 describe("maybe", () => {
 	const parser = maybe(char("a"));
 
-	it("works", () => {
-		const result = parser.run("a");
-
-		assert.ok(isParseSuccess(result));
-		const { value, stream } = result;
-
-		assert.ok(stream.isEmpty);
-		assertEqual(value, "a");
-	});
-
-	it("fails", () => {
-		const result = parser.run("b");
-
-		assert.ok(isParseSuccess(result));
-		const { value, stream } = result;
-
-		assert.ok(!stream.isEmpty);
-		assertEqual(value, undefined);
-	});
+	testParser("works", parser, "a", "a");
+	testParser("works on not matching", parser, "b", undefined, false);
 });
 
 it.todo("str");

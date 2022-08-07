@@ -12,16 +12,12 @@ export function testParser<T>(
 	it(name, () => {
 		const result = parser.run(content);
 
-		assert.ok(
-			isParseSuccess(result),
-			`Parsing test ${name} failed:
-${logResult(result)}`
-		);
+		assert.ok(isParseSuccess(result), logResult(result));
 
 		if (assertEmpty) {
 			assert.ok(
-				result.stream.isEmpty,
-				`Parsing test "${name}" failed:
+				result.stream.isEmpty(),
+				`Parse test "${name}" failed:
   Ending stream was nonempty:
   ${logResult(result)}`
 			);

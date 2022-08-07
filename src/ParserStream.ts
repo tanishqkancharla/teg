@@ -2,9 +2,9 @@ export class ParserStream {
 	index: number;
 	private length: number;
 
-	isEmpty() {
+	isEmpty = () => {
 		return this.length === 0;
-	}
+	};
 
 	constructor(public content: string, index?: number, length?: number) {
 		this.index = index === undefined ? 0 : index;
@@ -27,27 +27,9 @@ export class ParserStream {
 			this.length - distance
 		);
 	}
-	// Same interface as Array.slice but returns a new Stream
-	slice(start: number, stop: number) {
-		if (stop < start) {
-			throw new Error("stop < start");
-		}
-		if (stop && stop > this.length) {
-			throw new TypeError("index out of range");
-		}
-		return new ParserStream(
-			this.content,
-			this.index + start,
-			(stop || this.length) - start
-		);
-	}
 
 	log() {
 		const marker = " ".repeat(this.index) + "^";
 		return { content: this.content.replace(/\n/g, "\\n"), marker };
-	}
-
-	restOfStream() {
-		return this.content.slice(this.index);
 	}
 }

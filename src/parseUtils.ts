@@ -16,8 +16,7 @@ export function isParseFailure(
 
 export function logStream(stream: ParserStream) {
 	const { content, marker } = stream.log();
-	return `
-|
+	return `|
 | ${content}
 | ${marker}`;
 }
@@ -26,7 +25,9 @@ export function logResult(result: ParseResult<any>) {
 	if (isParseFailure(result)) {
 		return `
 Parse Failure
+
 ${logStream(result.stream)}
+
 Failed at index ${result.stream.index}: ${result.value}
 `;
 	} else {

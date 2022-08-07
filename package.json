@@ -16,6 +16,7 @@
 	"files": [
 		"build/*"
 	],
+	"sideEffects": false,
 	"repository": {
 		"url": "https://github.com/tanishqkancharla/teg"
 	},
