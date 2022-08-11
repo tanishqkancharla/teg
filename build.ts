@@ -12,9 +12,7 @@ function buildEsm() {
 		entryPoints,
 		outdir: "dist",
 		format: "esm",
-		outExtension: {
-			".js": ".mjs",
-		},
+		sourcemap: true,
 	});
 }
 
@@ -24,6 +22,9 @@ function buildCjs() {
 		outdir: "dist",
 		format: "cjs",
 		sourcemap: true,
+		outExtension: {
+			".js": ".cjs",
+		},
 	});
 }
 
