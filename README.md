@@ -6,7 +6,7 @@ Teg is a tiny declarative parser toolkit written in Typescript. It aims to be a 
 
 * 0 dependencies
 * Browser or Node
-* 4kb minified (but highly tree-shakeable)
+* 4kb minified (but highly tree-shakeable!)
 * Well-tested
 * Straightforward and semantic by default
 * But also powerful and composable API.
@@ -69,6 +69,10 @@ assert.equal(
 Since it's written in typescript, types are inferred as much as possible.
 
 Much of the idea comes from [Chet Corcos's article on parsers](https://medium.com/@chetcorcos/introduction-to-parsers-644d1b5d7f3d). Although `Parser`s currently implement `bimap`, `fold`, and `chain` methods as described in the article, I haven't found them as useful in real-world usage, and may remove them or change them.
+
+## ESM and CJS
+
+`teg` comes with out of the box support for both ESM and CJS. However, a lot of parsers in teg are just simple utilities, so if you use ESM, you will be probably be able to tree-shake away a significant portion of the library.
 
 ## Docs
 
