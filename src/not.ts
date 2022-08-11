@@ -16,6 +16,9 @@ export const not = (parser: Parser<any>): Parser<string> =>
 		if (isParseFailure(result)) {
 			return new ParseSuccess(stream.head(), stream.move(1));
 		} else {
-			return new ParseFailure("`Not` failed", result.stream);
+			return new ParseFailure(
+				`Parser succeeded when it was supposed to fail`,
+				result.stream
+			);
 		}
-	});
+	}, "not");

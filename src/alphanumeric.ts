@@ -38,7 +38,7 @@ export const lower = new Parser((stream) => {
 		return new ParseSuccess(value, stream.move(1));
 	}
 	return new ParseFailure(`${value} was not a lowercase letter`, stream);
-});
+}).withErrorScope("lower");
 
 const upperLetters = lowerLetters.map((char) => char.toUpperCase());
 
@@ -49,10 +49,10 @@ export const upper = new Parser((stream) => {
 		return new ParseSuccess(value, stream.move(1));
 	}
 	return new ParseFailure(`${value} was not a uppercase letter`, stream);
-});
+}).withErrorScope("upper");
 
 /** Matches a single letter, case insensitive */
-export const letter = oneOf([lower, upper]);
+export const letter = oneOf([lower, upper]).withErrorScope("letter");
 
 const digitChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
@@ -63,7 +63,7 @@ export const digit = new Parser((stream) => {
 		return new ParseSuccess(value, stream.move(1));
 	}
 	return new ParseFailure(`${value} was not a digit`, stream);
-});
+}).withErrorScope("digit");
 
 const hexLetterChars = lowerLetters.slice(0, 6);
 const hexDigitChars = [
@@ -79,7 +79,9 @@ export const hexDigit = new Parser((stream) => {
 		return new ParseSuccess(value, stream.move(1));
 	}
 	return new ParseFailure(`${value} was not a digit`, stream);
-});
+}).withErrorScope("hexDigit");
 
 /** Match a single letter or digit */
-export const alphaNumberic = oneOf([letter, digit]);
+export const alphaNumeric = oneOf([letter, digit]).withErrorScope(
+	"alphaNumeric"
+);

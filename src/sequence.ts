@@ -60,5 +60,5 @@ export function sequence<
 		}
 
 		return new ParseSuccess(seqValues, stream);
-	});
+	}, "sequence");
 }

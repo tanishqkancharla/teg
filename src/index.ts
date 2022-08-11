@@ -1,3 +1,5 @@
+import { alphaNumeric, digit, hexDigit, lower, upper } from "./alphanumeric";
+import { any, end } from "./any";
 import { between, prefix, suffix } from "./between";
 import { char } from "./char";
 import { lookahead } from "./lookahead";
@@ -10,13 +12,21 @@ import { ParseFailure, ParseResult, ParseSuccess } from "./ParseResult";
 import { ParserStream } from "./ParserStream";
 import { isParseFailure, isParseSuccess, logResult } from "./parseUtils";
 import { sequence } from "./sequence";
+import { str } from "./str";
 import { line, takeUntilAfter } from "./takeUntilAfter";
 
-import { str } from "./str";
-
+export {
+	logResult,
+	Parser,
+	ParseFailure,
+	ParseResult,
+	ParseSuccess,
+	ParserStream,
+	isParseFailure,
+	isParseSuccess,
+};
 export {
 	str,
-	logResult,
 	nOrMore,
 	zeroOrMore,
 	oneOrMore,
@@ -28,14 +38,7 @@ export {
 	prefix,
 	suffix,
 	takeUntilAfter,
-	Parser,
-	ParseFailure,
-	ParseResult,
-	ParseSuccess,
-	ParserStream,
-	isParseFailure,
-	isParseSuccess,
-	line,
 	not,
 	char,
 };
+export { line, lower, upper, digit, alphaNumeric, hexDigit, end, any };

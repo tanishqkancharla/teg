@@ -9,9 +9,9 @@ export const nOrMore = <T, D = never>(
 ): Parser<T[]> =>
 	new Parser((stream) => {
 		const values: T[] = [];
-		let errVal: string;
+		let errVal: string = "Stream was empty";
 
-		while (true || !stream.isEmpty) {
+		while (!stream.isEmpty()) {
 			let result = parser.run(stream);
 
 			if (isParseSuccess(result)) {
@@ -25,8 +25,7 @@ export const nOrMore = <T, D = never>(
 					if (afterDelimResult instanceof ParseSuccess) {
 						stream = afterDelimResult.stream;
 					} else {
-						errVal = `Could not parse delimiter after ${values.length} values:
-${afterDelimResult.value}`;
+						errVal = `${afterDelimResult.value}\nCould not parse delimiter after ${values.length} values:`;
 						break;
 					}
 				}
@@ -38,14 +37,13 @@ ${afterDelimResult.value}`;
 
 		if (values.length < n) {
 			return new ParseFailure(
-				`nOrMore failed: only matched ${values.length} tokens
-${errVal}`,
+				`${errVal}\nnOrMore failed: only matched ${values.length} tokens`,
 				stream
 			);
 		}
 
 		return new ParseSuccess(values, stream);
-	});
+	}, `norMore (n=${n})`);
 
 export const zeroOrMore = <T, D>(parser: Parser<T>, delimiter?: Parser<D>) =>
 	nOrMore(0, parser, delimiter);

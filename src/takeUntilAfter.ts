@@ -14,4 +14,8 @@ import { concat } from "./parseUtils";
 export const takeUntilAfter = <T>(parser: Parser<T>): Parser<string> =>
 	suffix(zeroOrMore(not(parser)), parser).map(concat);
 
+/**
+ * Takes the first sentence in the stream
+ * i.e. up to (and including) the first newline
+ */
 export const line = takeUntilAfter(char("\n"));

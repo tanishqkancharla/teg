@@ -6,7 +6,7 @@ Teg is a tiny declarative parser toolkit written in Typescript. It aims to be a 
 
 * 0 dependencies
 * Browser or Node
-* 2kb minified (but highly tree-shakeable)
+* 4kb minified (but highly tree-shakeable)
 * Well-tested
 * Straightforward and semantic by default
 * But also powerful and composable API.
@@ -70,9 +70,13 @@ Since it's written in typescript, types are inferred as much as possible.
 
 Much of the idea comes from [Chet Corcos's article on parsers](https://medium.com/@chetcorcos/introduction-to-parsers-644d1b5d7f3d). Although `Parser`s currently implement `bimap`, `fold`, and `chain` methods as described in the article, I haven't found them as useful in real-world usage, and may remove them or change them.
 
+## Docs
+
+TODO
+
 ## Testing parsers
 
-Teg ships a utility to test parsers at "teg-parser/testParser". Its signature is:
+Teg ships utilities to test parsers at "teg-parser/testParser". Its exports are:
 
 ```tsx
 export function testParser<T>(
@@ -81,6 +85,12 @@ export function testParser<T>(
 	content: string,
 	expected: T,
   assertEmpty = true
+)
+
+export function testParserFails<T>(
+	name: string,
+	parser: Parser<T>,
+	content: string
 )
 ```
 

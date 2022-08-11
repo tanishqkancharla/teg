@@ -5,4 +5,6 @@ import { concat } from "./parseUtils";
 
 export const whitespace = zeroOrMore(
 	oneOf([char("\n"), char(" "), char("\t"), char("\r")])
-).map(concat);
+)
+	.map(concat)
+	.withErrorScope("whitespace");

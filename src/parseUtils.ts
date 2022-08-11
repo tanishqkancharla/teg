@@ -1,6 +1,5 @@
 import { Parser } from "./Parser";
 import { ParseFailure, ParseResult, ParseSuccess } from "./ParseResult";
-import { ParserStream } from "./ParserStream";
 
 export function isParseSuccess<T>(
 	result: ParseResult<T>
@@ -14,19 +13,12 @@ export function isParseFailure(
 	return result instanceof ParseFailure;
 }
 
-export function logStream(stream: ParserStream) {
-	const { content, marker } = stream.log();
-	return `|
-| ${content}
-| ${marker}`;
-}
-
 export function logResult(result: ParseResult<any>) {
 	if (isParseFailure(result)) {
 		return `
 Parse Failure
 
-${logStream(result.stream)}
+${result.stream}
 
 Failed at index ${result.stream.index}: ${result.value}
 `;

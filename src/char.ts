@@ -14,4 +14,4 @@ export const char = <Char extends string>(c: Char): Parser<Char> =>
 		}
 
 		return new ParseFailure(`Char did not match ${JSON.stringify(c)}`, stream);
-	});
+	}, `char ("${c}")`);

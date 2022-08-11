@@ -14,8 +14,5 @@ export const oneOf = <ParserArray extends Parser<any>[]>(
 			}
 		}
 
-		return new ParseFailure(
-			"oneOf failed: Didn't match any of the given parsers",
-			stream
-		);
-	});
+		return new ParseFailure("Didn't match any of the given parsers", stream);
+	}, "oneOf");

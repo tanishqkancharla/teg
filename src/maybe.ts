@@ -15,4 +15,4 @@ export const maybe = <T>(parser: Parser<T>): Parser<T | undefined> =>
 		} else {
 			return new ParseSuccess(result.value, result.stream);
 		}
-	});
+	}, "maybe");
