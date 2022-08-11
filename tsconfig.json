@@ -8,7 +8,7 @@
 		"removeComments": false,
 		"sourceMap": true,
 		"lib": ["ES2018", "DOM"],
-		"outDir": "build",
+		"outDir": "dist",
 		"declaration": true,
 
 		"jsx": "react",
