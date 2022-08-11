@@ -1,15 +1,13 @@
 export class ParserStream {
-	index: number;
-	private length: number;
+	constructor(
+		public content: string,
+		public index: number = 0,
+		private length: number = content.length
+	) {}
 
 	isEmpty = () => {
 		return this.length === 0;
 	};
-
-	constructor(public content: string, index?: number, length?: number) {
-		this.index = index === undefined ? 0 : index;
-		this.length = length === undefined ? content.length : length;
-	}
 
 	// Get the first value from the iterable.
 	head() {
@@ -28,8 +26,12 @@ export class ParserStream {
 		);
 	}
 
-	log() {
+	toString() {
 		const marker = " ".repeat(this.index) + "^";
-		return { content: this.content.replace(/\n/g, "\\n"), marker };
+		const content = this.content.replace(/\n/g, "\\n");
+
+		return `|
+| ${content}
+| ${marker}`;
 	}
 }

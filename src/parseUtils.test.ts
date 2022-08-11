@@ -22,14 +22,7 @@ it.todo("suffix");
 it.todo("takeUntilAfter");
 
 describe("line", () => {
-	it("works", () => {
-		const result = line.run("a sentence\n");
-
-		assert.ok(isParseSuccess(result));
-		const { value } = result;
-
-		assertEqual(value, "a sentence");
-	});
+	testParser("works", line, "a sentence\n", "a sentence");
 
 	it("multiple sentences", () => {
 		let result = line.run("a sentence\na second sentence\n");

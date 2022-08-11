@@ -68,4 +68,9 @@ export class ParseFailure implements ParseResultI<string> {
 	) {
 		return failFn(this);
 	}
+
+	/** Add an error scope to this parse failure's message */
+	extend(scope: string) {
+		return new ParseFailure(`${this.value}\n${scope}`, this.stream);
+	}
 }

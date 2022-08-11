@@ -12,7 +12,11 @@ describe("nOrMore", () => {
 
 	testParserFails("fails when n is less", parser, "aa");
 
-	testParser.todo("Works when delimited");
+	const parserWithDelim = nOrMore(3, char("a"), char("b"));
+
+	testParser("Works when delimited", parserWithDelim, "ababa", ["a", "a", "a"]);
+
+	testParserFails("Fails when delimiter not present", parserWithDelim, "abaa");
 });
 
 describe("zeroOrMore", () => {
@@ -31,6 +35,11 @@ describe("zeroOrMore", () => {
 
 		testParser("succeeds when empty", parser, "", []);
 
-		testParser.todo("Works when delimited");
+		const parserWithDelim = zeroOrMore(str("abba"), char("C"));
+
+		testParser("Works when delimited", parserWithDelim, "abbaCabba", [
+			"abba",
+			"abba",
+		]);
 	});
 });

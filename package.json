@@ -1,6 +1,6 @@
 {
 	"name": "teg-parser",
-	"version": "0.2.2",
+	"version": "0.4.0",
 	"author": "Tanishq Kancharla <tanishqkancharla3@gmail.com>",
 	"description": "A tiny parser framework",
 	"keywords": [
@@ -11,7 +11,10 @@
 		"types"
 	],
 	"license": "MIT",
-	"main": "build/index.js",
+	"exports": {
+		".": "./build/index.js",
+		"./testParser": "./build/testParser.js"
+	},
 	"types": "build/index.d.ts",
 	"files": [
 		"build/*"

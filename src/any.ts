@@ -7,7 +7,7 @@ import { ParseFailure, ParseSuccess } from "./ParseResult";
 export const any: Parser<string> = new Parser((stream) => {
 	const value = stream.head();
 	return new ParseSuccess(value, stream.move(1));
-});
+}).withErrorScope("any");
 
 export const end: Parser<null> = new Parser((stream) => {
 	try {
@@ -19,4 +19,4 @@ export const end: Parser<null> = new Parser((stream) => {
 	} catch {
 		return new ParseSuccess(null, stream);
 	}
-});
+}).withErrorScope("end");

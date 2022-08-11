@@ -1,5 +1,5 @@
 import { Parser } from "./Parser";
-import { ParseFailure, ParseSuccess } from "./ParseResult";
+import { ParseSuccess } from "./ParseResult";
 import { isParseFailure } from "./parseUtils";
 
 export const lookahead = <T>(parser: Parser<T>): Parser<T> =>
@@ -7,8 +7,8 @@ export const lookahead = <T>(parser: Parser<T>): Parser<T> =>
 		const result = parser.run(stream);
 
 		if (isParseFailure(result)) {
-			return new ParseFailure(result.value, stream);
+			return result.extend("Lookahead failed.");
 		} else {
 			return new ParseSuccess(result.value, stream);
 		}
-	});
+	}, "lookahead");
