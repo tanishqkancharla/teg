@@ -1,7 +1,7 @@
 import { Parser } from "./Parser";
 import { ParseFailure, ParseSuccess } from "./ParseResult";
 
-/** Matches exactly one of the given parsers */
+/** Matches exactly one of the given parsers, checked in the given order */
 export const oneOf = <ParserArray extends Parser<any>[]>(
 	parsers: ParserArray
 ): ParserArray[number] =>

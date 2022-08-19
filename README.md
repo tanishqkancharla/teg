@@ -74,9 +74,125 @@ Much of the idea comes from [Chet Corcos's article on parsers](https://medium.co
 
 `teg` comes with out of the box support for both ESM and CJS. However, a lot of parsers in teg are just simple utilities, so if you use ESM, you will be probably be able to tree-shake away a significant portion of the library.
 
-## Docs
+## Combinators
 
-TODO
+```tsx
+/** Matches a string */
+export const str = <T extends string>(str: T) => Parser<T>
+```
+```tsx
+/**
+ * Match the given parser n or more times, with an optional delimiter parser
+ * in between.
+ */
+const nOrMore: <T, D>(
+	n: number,
+	parser: Parser<T>,
+	delimiter?: Parser<D>
+) => Parser<T[]>
+/**
+ * Match the given parser zero or more times, with an optional delimiter
+ * NOTE: this will always succeed.
+ */
+const zeroOrMore: <T, D>(parser: Parser<T>, delimiter?: Parser<D>) => Parser<T[]>
+/**
+ * Match the given parser one or more times, with an optional delimiter
+ */
+const oneOrMore: <T, D>(parser: Parser<T>, delimiter?: Parser<D>) => Parser<T[]>
+```
+```tsx
+/** Matches exactly one of the given parsers, checked in the given order */
+const oneOf: <ParserArray extends Parser<any>[]>(
+	parsers: ParserArray
+) => ParserArray[number]
+```
+```tsx
+/**
+ * Match the given parsers in sequence
+ *
+ * @example
+ * sequence([char("a"), char("b"), char("c")]) => Parser<"abc">
+ */
+const sequence: (
+	parsers: Parser[],
+	delimiter?: Parser
+) => Parser
+```
+```tsx
+/**
+ * Look ahead in the stream to match the given parser.
+ * If it succeeds, it consumes no tokens.
+ */
+const lookahead: <T>(parser: Parser<T>) => Parser<T>
+```
+```tsx
+/**
+ * Tries matching a parser, returns undefined if it fails
+ * NOTE: This parser always succeeds
+ */
+const maybe: <T>(parser: Parser<T>) => Parser<T | undefined>
+```
+```tsx
+/**
+ * Only matches the middle parser if it is surrounded by the `left` and `right`
+ * parsers
+ *
+ * @example
+ * between(char("a"), char("b"), char("c")) => Parser<"b"> // Matches "abc"
+ */
+const between: <L, T, R>(
+	left: Parser<L>,
+	parser: Parser<T>,
+	right: Parser<R>
+) => Parser<T>
+/**
+ * Only matches the given `parser` if it is prefixed by `prefix`
+ *
+ * @example
+ * prefix(char("a"), char("b")) => Parser<"b"> // Matches "ab"
+ */
+const prefix: <P, T>(prefix: Parser<P>, parser: Parser<T>) => Parser<T>
+/**
+ * Only matches the given `parser` if it is suffixed by `suffix`
+ *
+ * @example
+ * suffix(char("b"), char("c")) => Parser<"b"> // Matches "bc"
+ */
+const suffix: <T, S>(parser: Parser<T>, suffix: Parser<S>) => Parser<T>
+```
+```tsx
+/**
+ * Keep consuming until the given parser succeeds.
+ * Returns all the characters that were consumed before the parser succeded.
+ *
+ * @example
+ * `takeUntilAfter(char("\n"))` takes until after the newline but
+ * doesn't include the newline itself in the result
+ */
+const takeUntilAfter: <T>(parser: Parser<T>) => Parser<string>
+```
+
+## Built-in parsers
+
+```tsx
+/**
+ * Takes the first sentence in the stream
+ * i.e. up to (and including) the first newline
+ */
+const line = takeUntilAfter(char("\n"));
+/** Matches a single lowercase letter */
+const lower: Parser<string>
+/** Matches a single uppercase letter */
+const upper: Parser<string>
+/** Matches a single letter, case insensitive */
+const letter: Parser<string>
+/** Match a single digit from 0 to 9 */
+const digit: Parser<string>
+/** Match a single hexadecimal digit (0-9, A-F), case insensitive */
+const hexDigit: Parser<string>
+/** Match a single letter or digit */
+const alphaNumeric: Parser<string>
+```
 
 ## Testing parsers
 

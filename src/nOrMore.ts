@@ -2,6 +2,10 @@ import { Parser } from "./Parser";
 import { ParseFailure, ParseSuccess } from "./ParseResult";
 import { isParseSuccess } from "./parseUtils";
 
+/**
+ * Match the given parser n or more times, with an optional delimiter parser
+ * in between.
+ */
 export const nOrMore = <T, D = never>(
 	n: number,
 	parser: Parser<T>,
@@ -45,8 +49,15 @@ export const nOrMore = <T, D = never>(
 		return new ParseSuccess(values, stream);
 	}, `norMore (n=${n})`);
 
+/**
+ * Match the given parser zero or more times, with an optional delimiter
+ * NOTE: this will always succeed.
+ */
 export const zeroOrMore = <T, D>(parser: Parser<T>, delimiter?: Parser<D>) =>
 	nOrMore(0, parser, delimiter);
 
+/**
+ * Match the given parser one or more times, with an optional delimiter
+ */
 export const oneOrMore = <T, D>(parser: Parser<T>, delimiter?: Parser<D>) =>
 	nOrMore(1, parser, delimiter);

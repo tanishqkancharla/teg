@@ -22,6 +22,12 @@ export function sequence<
 	delimiter?: Parser<Delimiter>
 ): Parser<ParserTokenArray<ParserArray>>;
 
+/**
+ * Match the given parsers in sequence (or fail)
+ *
+ * @example
+ * sequence([char("a"), char("b"), char("c")]) // Matches "abc"
+ */
 export function sequence<
 	N extends number,
 	ParserArray extends FixedSizeArray<N, Parser<any>>,

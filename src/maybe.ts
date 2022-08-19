@@ -4,7 +4,7 @@ import { isParseFailure } from "./parseUtils";
 
 /**
  * Tries matching a parser, returns undefined if it fails
- * Not that this parser always succeeds
+ * NOTE: This parser always succeeds
  */
 export const maybe = <T>(parser: Parser<T>): Parser<T | undefined> =>
 	new Parser((stream) => {

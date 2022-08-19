@@ -32,7 +32,7 @@ const lowerLetters = [
 ];
 
 /** Matches a single lowercase letter */
-export const lower = new Parser((stream) => {
+export const lower: Parser<string> = new Parser((stream) => {
 	const value = stream.head();
 	if (lowerLetters.includes(value)) {
 		return new ParseSuccess(value, stream.move(1));
@@ -43,7 +43,7 @@ export const lower = new Parser((stream) => {
 const upperLetters = lowerLetters.map((char) => char.toUpperCase());
 
 /** Matches a single uppercase letter */
-export const upper = new Parser((stream) => {
+export const upper: Parser<string> = new Parser((stream) => {
 	const value = stream.head();
 	if (upperLetters.includes(value)) {
 		return new ParseSuccess(value, stream.move(1));
@@ -52,12 +52,14 @@ export const upper = new Parser((stream) => {
 }).withErrorScope("upper");
 
 /** Matches a single letter, case insensitive */
-export const letter = oneOf([lower, upper]).withErrorScope("letter");
+export const letter: Parser<string> = oneOf([lower, upper]).withErrorScope(
+	"letter"
+);
 
 const digitChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 /** Match a single digit from 0 to 9 */
-export const digit = new Parser((stream) => {
+export const digit: Parser<string> = new Parser((stream) => {
 	const value = stream.head();
 	if (digitChars.includes(value)) {
 		return new ParseSuccess(value, stream.move(1));
@@ -73,7 +75,7 @@ const hexDigitChars = [
 ];
 
 /** Match a single hexadecimal digit (0-9, A-F), case insensitive */
-export const hexDigit = new Parser((stream) => {
+export const hexDigit: Parser<string> = new Parser((stream) => {
 	const value = stream.head();
 	if (hexDigitChars.includes(value)) {
 		return new ParseSuccess(value, stream.move(1));
@@ -82,6 +84,7 @@ export const hexDigit = new Parser((stream) => {
 }).withErrorScope("hexDigit");
 
 /** Match a single letter or digit */
-export const alphaNumeric = oneOf([letter, digit]).withErrorScope(
-	"alphaNumeric"
-);
+export const alphaNumeric: Parser<string> = oneOf([
+	letter,
+	digit,
+]).withErrorScope("alphaNumeric");
