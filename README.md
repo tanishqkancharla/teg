@@ -70,10 +70,6 @@ Since it's written in typescript, types are inferred as much as possible.
 
 Much of the idea comes from [Chet Corcos's article on parsers](https://medium.com/@chetcorcos/introduction-to-parsers-644d1b5d7f3d). Although `Parser`s currently implement `bimap`, `fold`, and `chain` methods as described in the article, I haven't found them as useful in real-world usage, and may remove them or change them.
 
-## ESM and CJS
-
-`teg` comes with out of the box support for both ESM and CJS. However, a lot of parsers in teg are just simple utilities, so if you use ESM, you will be probably be able to tree-shake away a significant portion of the library.
-
 ## Combinators
 
 ```tsx
@@ -121,7 +117,7 @@ const sequence: (
 ```tsx
 /**
  * Look ahead in the stream to match the given parser.
- * If it succeeds, it consumes no tokens.
+ * NOTE: This consumes no tokens.
  */
 const lookahead: <T>(parser: Parser<T>) => Parser<T>
 ```
@@ -180,23 +176,33 @@ const takeUntilAfter: <T>(parser: Parser<T>) => Parser<string>
  * i.e. up to (and including) the first newline
  */
 const line = takeUntilAfter(char("\n"));
+
 /** Matches a single lowercase letter */
 const lower: Parser<string>
+
 /** Matches a single uppercase letter */
 const upper: Parser<string>
+
 /** Matches a single letter, case insensitive */
 const letter: Parser<string>
+
 /** Match a single digit from 0 to 9 */
 const digit: Parser<string>
+
 /** Match a single hexadecimal digit (0-9, A-F), case insensitive */
 const hexDigit: Parser<string>
+
 /** Match a single letter or digit */
 const alphaNumeric: Parser<string>
 ```
 
+## Examples
+
+TODO to build out more example parsers. However, you can see an example of a bigger parser I use for my custom blog post format: [https://github.com/tanishqkancharla/tk-parser/blob/main/src/index.ts](https://github.com/tanishqkancharla/tk-parser/blob/main/src/index.ts)
+
 ## Testing parsers
 
-Teg ships utilities to test parsers at "teg-parser/testParser". Its exports are:
+Teg ships utilities to test parsers at `teg-parser/testParser`. Its exports are:
 
 ```tsx
 export function testParser<T>(
@@ -213,6 +219,10 @@ export function testParserFails<T>(
 	content: string
 )
 ```
+
+## ESM and CJS
+
+`teg` comes with out of the box support for both ESM and CJS. However, a lot of parsers in teg are just simple utilities, so if you use ESM, you will be probably be able to tree-shake away a significant portion of the library.
 
 ## Name
 
