@@ -13,7 +13,7 @@ import { ParserStream } from "./ParserStream";
 import { isParseFailure, isParseSuccess, logResult } from "./parseUtils";
 import { sequence } from "./sequence";
 import { str } from "./str";
-import { line, takeUntilAfter } from "./takeUntilAfter";
+import { line, takeUntilAfter, takeUpTo } from "./takeUntilAfter";
 
 export {
 	logResult,
@@ -40,5 +40,6 @@ export {
 	takeUntilAfter,
 	not,
 	char,
+	takeUpTo,
 };
 export { line, lower, upper, digit, alphaNumeric, hexDigit, end, any };
