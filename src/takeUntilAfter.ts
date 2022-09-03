@@ -1,5 +1,6 @@
 import { suffix } from "./between";
 import { char } from "./char";
+import { lookahead } from "./lookahead";
 import { zeroOrMore } from "./nOrMore";
 import { not } from "./not";
 import { Parser } from "./Parser";
@@ -16,8 +17,11 @@ import { concat } from "./parseUtils";
 export const takeUntilAfter = <T>(parser: Parser<T>): Parser<string> =>
 	suffix(zeroOrMore(not(parser)), parser).map(concat);
 
+export const takeUpTo = <T>(parser: Parser<T>): Parser<string> =>
+	zeroOrMore(not(lookahead(parser))).map(concat);
+
 /**
  * Takes the first sentence in the stream
- * i.e. up to (and including) the first newline
+ * i.e. up to (but not including) the first newline
  */
-export const line = takeUntilAfter(char("\n"));
+export const line = takeUpTo(char("\n"));

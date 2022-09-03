@@ -23,7 +23,7 @@ export function testParser<T>(
 			);
 		}
 
-		assertEqual(result.value, expected);
+		assertEqual(result.value, expected, logResult(result));
 	});
 }
 

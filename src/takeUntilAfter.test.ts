@@ -1,5 +1,5 @@
 import { char } from "./char";
-import { takeUntilAfter } from "./takeUntilAfter";
+import { takeUntilAfter, takeUpTo } from "./takeUntilAfter";
 import { testParser, testParserFails } from "./testParser";
 
 describe("takeUntilAfter", () => {
@@ -8,4 +8,10 @@ describe("takeUntilAfter", () => {
 	testParser("works", parser, "aaab", "aaa");
 
 	testParserFails("fails on non-match", parser, "aaa");
+});
+
+describe("takeUpTo", () => {
+	const parser = takeUpTo(char("b"));
+
+	testParser("works", parser, "aaab", "aaa", false);
 });
