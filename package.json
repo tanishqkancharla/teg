@@ -27,7 +27,7 @@
 	},
 	"types": "dist/index.d.ts",
 	"files": [
-		"build/*"
+		"dist/*"
 	],
 	"sideEffects": false,
 	"repository": {
@@ -36,7 +36,7 @@
 	"scripts": {
 		"typecheck": "tsc --noEmit",
 		"build": "tsc",
-		"clean": "rm -rf build",
+		"clean": "rm -rf dist/*",
 		"watch": "tsc --watch",
 		"release": "npm run clean; npm run build; npm publish",
 		"test": "jest --verbose",
