@@ -11,36 +11,36 @@
 		"types"
 	],
 	"license": "MIT",
-	"main": "./dist/index.cjs",
-	"module": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"files": [
-		"dist/*"
-	],
-	"type": "module",
 	"exports": {
-		".": {
-			"require": "./dist/index.cjs",
-			"import": "./dist/index.js",
-			"types": "./dist/index.d.ts"
-		},
-		"./testParser": {
-			"require": "./dist/testParser.cjs",
-			"import": "./dist/testParser.js",
-			"types": "./dist/testParser.d.ts"
+		"./testParser": "./dist/testParser.js",
+		".": "./dist/index.js"
+	},
+	"typesVersions": {
+		"*": {
+			"index": [
+				"./dist/index.d.ts"
+			],
+			"testParser": [
+				"./dist/testParser.d.ts"
+			]
 		}
 	},
+	"types": "dist/index.d.ts",
+	"files": [
+		"build/*"
+	],
 	"sideEffects": false,
 	"repository": {
 		"url": "https://github.com/tanishqkancharla/teg"
 	},
 	"scripts": {
-		"clean": "rm -rf dist/*",
-		"build": "npm run clean; ts-node ./build.ts && tsc --emitDeclarationOnly",
 		"typecheck": "tsc --noEmit",
+		"build": "tsc",
+		"clean": "rm -rf build",
+		"watch": "tsc --watch",
 		"release": "npm run clean; npm run build; npm publish",
 		"test": "jest --verbose",
-		"bundlesize": "esbuild ./src/index.ts --bundle --minify --outfile=bundled; rm bundled"
+		"bundlesize": "esbuild src/index.ts --bundle --minify --outfile=out.js ; rm out.js"
 	},
 	"devDependencies": {
 		"@types/jest": "^27.5.0",

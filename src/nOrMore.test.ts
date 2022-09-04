@@ -16,6 +16,14 @@ describe("nOrMore", () => {
 
 	testParser("Works when delimited", parserWithDelim, "ababa", ["a", "a", "a"]);
 
+	testParser(
+		"Rolls back when stream ends at a delimiter",
+		parserWithDelim,
+		"ababab",
+		["a", "a", "a"],
+		false
+	);
+
 	testParserFails("Fails when delimiter not present", parserWithDelim, "abaa");
 });
 

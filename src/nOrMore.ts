@@ -14,6 +14,7 @@ export const nOrMore = <T, D = never>(
 	new Parser((stream) => {
 		const values: T[] = [];
 		let errVal: string = "Stream was empty";
+		let beforeLastDelimStream = stream;
 
 		while (!stream.isEmpty()) {
 			let result = parser.run(stream);
@@ -22,6 +23,7 @@ export const nOrMore = <T, D = never>(
 				const { value, stream: newStream } = result;
 				values.push(value);
 				stream = newStream;
+				beforeLastDelimStream = stream;
 
 				if (delimiter) {
 					const afterDelimResult = delimiter.run(newStream);
@@ -46,7 +48,7 @@ export const nOrMore = <T, D = never>(
 			);
 		}
 
-		return new ParseSuccess(values, stream);
+		return new ParseSuccess(values, beforeLastDelimStream);
 	}, `norMore (n=${n})`);
 
 /**
