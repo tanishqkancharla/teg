@@ -31,9 +31,35 @@ testParser.todo = <T>(
 	name: string,
 	parser?: Parser<T>,
 	content?: string,
-	expected?: T
+	expected?: T,
+	assertEmpty = true
 ) => {
 	it.todo(name);
+};
+
+testParser.only = <T>(
+	name: string,
+	parser: Parser<T>,
+	content: string,
+	expected: T,
+	assertEmpty = true
+) => {
+	it.only(name, () => {
+		const result = parser.run(content);
+
+		assert.ok(isParseSuccess(result), logResult(result));
+
+		if (assertEmpty) {
+			assert.ok(
+				result.stream.isEmpty(),
+				`Parse test "${name}" failed:
+  Ending stream was nonempty:
+  ${logResult(result)}`
+			);
+		}
+
+		assertEqual(result.value, expected, logResult(result));
+	});
 };
 
 export function testParserFails<T>(

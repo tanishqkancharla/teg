@@ -1,37 +1,45 @@
 export class ParserStream {
-	constructor(
-		public content: string,
-		public index: number = 0,
-		private length: number = content.length
-	) {}
+	constructor(public content: string, public index: number = 0) {}
 
 	isEmpty = () => {
-		return this.length === 0;
+		return this.content.length === this.index;
 	};
 
 	// Get the first value from the iterable.
-	head() {
+	head = (amount = 1) => {
 		if (this.isEmpty()) {
-			throw new TypeError("Stream was emptied");
+			throw new TypeError("Stream is empty");
+		} else if (amount + this.index > this.content.length) {
+			throw new TypeError(
+				`Cannot access ${amount} characters: stream only has ${
+					this.content.length - this.index
+				} characters left`
+			);
 		}
-		return this.content[this.index];
-	}
+		return this.content.slice(this.index, this.index + amount);
+	};
 
 	// Consume the stream by moving the cursor.
-	move(distance: number) {
-		return new ParserStream(
-			this.content,
-			this.index + distance,
-			this.length - distance
-		);
-	}
+	move = (distance: number) => {
+		if (this.isEmpty()) {
+			throw new TypeError("Stream is empty");
+		} else if (distance + this.index > this.content.length) {
+			throw new TypeError(
+				`Cannot move ${distance} characters: stream only has ${
+					this.content.length - this.index
+				} characters left`
+			);
+		}
 
-	toString() {
+		return new ParserStream(this.content, this.index + distance);
+	};
+
+	toString = () => {
 		const marker = " ".repeat(this.index) + "^";
 		const content = this.content.replace(/\n/g, "\\n");
 
 		return `|
 | ${content}
 | ${marker}`;
-	}
+	};
 }

@@ -1,0 +1,6 @@
+{
+	"name": "teg-examples",
+	"dependencies": {
+		"teg-parser": "0.10.0"
+	}
+}

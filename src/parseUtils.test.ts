@@ -1,7 +1,6 @@
-import { assert, assertEqual } from "./assertUtils";
 import { char } from "./char";
 import { maybe } from "./maybe";
-import { isParseSuccess } from "./parseUtils";
+import { sequence } from "./sequence";
 import { line } from "./takeUntilAfter";
 import { testParser } from "./testParser";
 
@@ -22,18 +21,15 @@ it.todo("suffix");
 it.todo("takeUntilAfter");
 
 describe("line", () => {
-	testParser("works", line, "a sentence\n", "a sentence");
+	testParser("works", line, "a sentence\n", "a sentence", false);
 
-	it("multiple sentences", () => {
-		let result = line.run("a sentence\na second sentence\n");
+	const twoSentences = sequence([line, line], char("\n"));
 
-		assert.ok(isParseSuccess(result));
-		assertEqual(result.value, "a sentence");
-
-		result = line.run(result.stream);
-
-		assert.ok(isParseSuccess(result));
-
-		assertEqual(result.value, "a second sentence");
-	});
+	testParser(
+		"multiple sentence",
+		twoSentences,
+		"a sentence\na second sentence\n",
+		["a sentence", "a second sentence"],
+		false
+	);
 });

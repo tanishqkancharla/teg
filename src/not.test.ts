@@ -8,4 +8,6 @@ describe("not", () => {
 	testParser("works", parser, "b", "b");
 
 	testParserFails("fails", parser, "a");
+
+	// const parserWithStr = not(str("ab"));
 });
