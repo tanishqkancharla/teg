@@ -9,7 +9,9 @@ describe("sequence", () => {
 
 	testParserFails("fails", parser, "bac");
 
-	testParser.todo("Works when given delimiter");
+	testParser.todo("Works with delimiter");
 
 	testParser.todo("Fails when delimiter doesn't match");
+
+	testParser.todo("Doesn't take last delimiter value if it exists");
 });
