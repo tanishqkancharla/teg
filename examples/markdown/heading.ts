@@ -22,7 +22,7 @@ const h3Parser: Parser<HeadingBlock> = prefix(str("# "), line)
 	.withErrorScope("Heading 1")
 	.map((content) => ({ type: "heading", level: 1, content }));
 
-export const headingParser: Parser<HeadingBlock> = oneOf([
+export const heading: Parser<HeadingBlock> = oneOf([
 	h1Parser,
 	h2Parser,
 	h3Parser,

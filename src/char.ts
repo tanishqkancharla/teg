@@ -2,7 +2,7 @@ import { Parser } from "./Parser";
 import { ParseFailure, ParseSuccess } from "./ParseResult";
 
 /**
- * Consume a single amtching character.
+ * Consume a single matching character.
  * This is functionally equivalent to `str`, it differs only in semantics
  */
 export const char = <Char extends string>(c: Char): Parser<Char> =>

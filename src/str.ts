@@ -9,6 +9,9 @@ export const str = <T extends string>(stringToMatch: T): Parser<T> =>
 		if (nextStrOfLength === stringToMatch) {
 			return new ParseSuccess(stringToMatch, stream.move(stringToMatch.length));
 		} else {
-			return new ParseFailure(`String did not match ${stringToMatch}`, stream);
+			return new ParseFailure(
+				`String did not match ${stringToMatch}, found ${nextStrOfLength}`,
+				stream
+			);
 		}
 	}).withErrorScope(`String ${stringToMatch}`);

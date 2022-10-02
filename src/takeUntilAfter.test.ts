@@ -1,13 +1,8 @@
 import { char } from "./char";
-<<<<<<< HEAD
+import { oneOrMore } from "./nOrMore";
 import { sequence } from "./sequence";
 import { str } from "./str";
-import { takeUntilAfter, takeUpTo } from "./takeUntilAfter";
-=======
-import { oneOrMore } from "./nOrMore";
-import { str } from "./str";
 import { line, takeUntilAfter, takeUpTo } from "./takeUntilAfter";
->>>>>>> main
 import { testParser, testParserFails } from "./testParser";
 
 describe("takeUntilAfter", () => {
@@ -17,17 +12,9 @@ describe("takeUntilAfter", () => {
 
 	testParserFails("fails on non-match", parser, "aaa");
 
-<<<<<<< HEAD
-	const parserWithString = takeUntilAfter(str("bbb"));
-
-	testParser("works with string", parserWithString, "aaabbb", "aaa");
-
-	testParserFails("fails with string on non-match", parserWithString, "aaabb");
-=======
 	const stringParser = takeUntilAfter(str("def"));
 
 	testParser("works", stringParser, "abcdef", "abc", true);
->>>>>>> main
 });
 
 describe("takeUpTo", () => {
@@ -35,10 +22,9 @@ describe("takeUpTo", () => {
 
 	testParser("works", parser, "aaab", "aaa", false);
 
-<<<<<<< HEAD
-	const parserWithStr = takeUpTo(str("bbb"));
+	const stringParser = takeUpTo(str("def"));
 
-	testParser("works with str", parserWithStr, "aaabbbaaa", "aaa", false);
+	testParser("works", stringParser, "abcdef", "abc", false);
 
 	const sequenceWithTakeUpTo = sequence([
 		takeUpTo(str("bbb")),
@@ -51,10 +37,6 @@ describe("takeUpTo", () => {
 		"bbb",
 		"aaa",
 	]);
-=======
-	const stringParser = takeUpTo(str("def"));
-
-	testParser("works", stringParser, "abcdef", "abc", false);
 });
 
 describe("line", () => {
@@ -69,5 +51,4 @@ describe("line", () => {
 		["a sentence", "a second sentence"],
 		false
 	);
->>>>>>> main
 });

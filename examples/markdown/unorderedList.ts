@@ -34,5 +34,5 @@ export const indentedUnorderedListParser = (
 			listItems,
 		}));
 
-export const unorderedListParser: Parser<UnorderedListBlock> =
+export const unorderedList: Parser<UnorderedListBlock> =
 	indentedUnorderedListParser(0).withErrorScope("Unordered List");

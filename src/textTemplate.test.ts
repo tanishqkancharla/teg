@@ -15,7 +15,7 @@ describe("textTemplate", () => {
 
 	const openBracket = textTemplate`[${0}`;
 
-	testParser("hole at end works", openBracket, "[hello", ["hello"]);
+	testParser("hole at end works", openBracket, "[hello]", ["hello]"]);
 
 	const multipleConsecutiveHoles = textTemplate`[${0}${0}]`;
 });

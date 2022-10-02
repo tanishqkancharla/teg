@@ -2,17 +2,39 @@
 // Markdown Doc
 // ============================================================================
 
-import { BlockquoteBlock } from "./blockquote";
-import { DividerBlock } from "./divider";
-import { HeadingBlock } from "./heading";
-import { ParagraphBlock } from "./paragraph";
-import { UnorderedListBlock } from "./unorderedList";
+import { char, oneOf, oneOrMore, Parser } from "teg-parser/index";
+import { blockquote, BlockquoteBlock } from "./blockquote";
+import { divider, DividerBlock } from "./divider";
+import { heading, HeadingBlock } from "./heading";
+import { image, ImageBlock } from "./image";
+import { paragraph, ParagraphBlock } from "./paragraph";
+import { unorderedList, UnorderedListBlock } from "./unorderedList";
 
 type MarkdownBlock =
 	| HeadingBlock
 	| ParagraphBlock
 	| UnorderedListBlock
 	| BlockquoteBlock
-	| DividerBlock;
+	| DividerBlock
+	| ImageBlock;
 // | OrderedListBlock
-// | ImageBlock;
+
+type MarkdownDoc = {
+	blocks: MarkdownBlock[];
+};
+
+const block: Parser<MarkdownBlock> = oneOf([
+	heading,
+	paragraph,
+	unorderedList,
+	blockquote,
+	divider,
+	image,
+]);
+
+export const markdownDoc: Parser<MarkdownDoc> = oneOrMore(
+	block,
+	char("\n")
+).map((blocks) => {
+	return { blocks };
+});

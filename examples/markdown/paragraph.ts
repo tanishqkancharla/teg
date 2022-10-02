@@ -10,7 +10,7 @@ export type ParagraphBlock = {
 	content: RichTextContent;
 };
 
-export const paragraphParser: Parser<ParagraphBlock> = richTextParser
+export const paragraph: Parser<ParagraphBlock> = richTextParser
 	.withErrorScope("Paragraph")
 	.map((content) => ({
 		type: "paragraph",

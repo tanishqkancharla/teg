@@ -4,6 +4,6 @@ export type DividerBlock = {
 	type: "divider";
 };
 
-export const dividerParser: Parser<DividerBlock> = str("---\n").map(() => ({
+export const divider: Parser<DividerBlock> = str("---").map(() => ({
 	type: "divider",
 }));

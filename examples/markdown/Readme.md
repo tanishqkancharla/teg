@@ -4,13 +4,18 @@ This folder contains the implementation of markdown in [Teg](https://tanishqkanc
 The following formatting is implemented.
 
 * Headings
+* Paragraphs
 * Bold
 * Italic
-* Blockquote
-* Ordered List
-* Unordered List
 * Inline Code
-* Horizontal rule
+* Blockquote
+* Unordered List
+* Divider
 * Link
 * Image
-* Fenced code block
+
+The following formatting isn't implemented, but left as an "exercise to the reader" (accepting PRs!)
+
+* Ordered List
+* Fenced Code Blocks
+* Tables
