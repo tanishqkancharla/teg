@@ -18,7 +18,7 @@ export const takeUntilAfter = <T>(parser: Parser<T>): Parser<string> =>
 	suffix(zeroOrMore(not(parser)), parser).map(concat);
 
 export const takeUpTo = <T>(parser: Parser<T>): Parser<string> =>
-	zeroOrMore(not(lookahead(parser))).map(concat);
+	suffix(zeroOrMore(not(parser)), lookahead(parser)).map(concat);
 
 /**
  * Takes the first sentence in the stream
