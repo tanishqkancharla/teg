@@ -1,15 +1,23 @@
 import { between } from "./between";
 import { char } from "./char";
-import { testParser, testParserFails } from "./testParser";
+import { testParser } from "./testParser";
 
 describe("between", () => {
-	const parser = between(char("a"), char("b"), char("c"));
+	const parser = testParser(between(char("a"), char("b"), char("c")));
 
-	testParser("works", parser, "abc", "b");
+	it("works", () => {
+		parser.parses("abc", "b");
+	});
 
-	testParserFails("fails when prefix doesn't match", parser, "dbc");
+	it("fails when prefix doesn't match", () => {
+		parser.fails("dbc");
+	});
 
-	testParserFails("fails when middle doesn't match", parser, "adc");
+	it("fails when middle doesn't match", () => {
+		parser.fails("adc");
+	});
 
-	testParserFails("fails when suffix doesn't match", parser, "abd");
+	it("fails when suffix doesn't match", () => {
+		parser.fails("abd");
+	});
 });

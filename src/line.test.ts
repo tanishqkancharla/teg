@@ -4,15 +4,21 @@ import { oneOrMore } from "./nOrMore";
 import { testParser } from "./testParser";
 
 describe("line", () => {
-	testParser("works", line, "a sentence\n", "a sentence", false);
+	const test = testParser(line);
 
-	const parser = oneOrMore(line, char("\n"));
+	it("works", () => test.parses("a sentence\n", "a sentence", false));
 
-	testParser(
-		"multiple sentences",
-		parser,
-		"a sentence\na second sentence\n",
-		["a sentence", "a second sentence"],
-		false
-	);
+	const multipleSentences = testParser(oneOrMore(line, char("\n")));
+
+	it("multiple sentences", () => {
+		multipleSentences.parses(
+			"a sentence\na second sentence\n",
+			["a sentence", "a second sentence"],
+			false
+		);
+	});
+
+	it("works till end", () => {
+		test.parses("a sentence", "a sentence");
+	});
 });

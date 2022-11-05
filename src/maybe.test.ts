@@ -3,8 +3,13 @@ import { maybe } from "./maybe";
 import { testParser } from "./testParser";
 
 describe("maybe", () => {
-	const parser = maybe(char("a"));
+	const parser = testParser(maybe(char("a")));
 
-	testParser("works", parser, "a", "a");
-	testParser("works when no match", parser, "b", undefined, false);
+	it("works", () => {
+		parser.parses("a", "a");
+	});
+
+	it("works on non-match", () => {
+		parser.parses("b", undefined, false);
+	});
 });

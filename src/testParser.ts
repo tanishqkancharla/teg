@@ -1,61 +1,49 @@
 import { assert, assertEqual } from "./assertUtils";
 import { Parser } from "./Parser";
-import { isParseFailure, isParseSuccess, logResult } from "./parseUtils";
+import { isParseFailure, logResult } from "./parseUtils";
 
-export function testParser<T>(
-	name: string,
-	parser: Parser<T>,
-	content: string,
-	expected: T,
-	assertEmpty = true
-) {
-	it(name, () => {
-		const result = parser.run(content);
+class ParseTester<T> {
+	constructor(private parser: Parser<T>) {}
 
-		assert.ok(isParseSuccess(result), logResult(result));
+	parses(content: string, expected: T, assertEmpty = true) {
+		const result = this.parser.run(content);
+
+		const resultLog = logResult(result);
+
+		assert(result.success, `Expected parse to be sucessful: ${resultLog}`);
 
 		if (assertEmpty) {
-			assert.ok(
+			assert(
 				result.stream.isEmpty(),
-				`Parse test "${name}" failed:
-  Ending stream was nonempty:
-  ${logResult(result)}`
+				`Expected parse stream to be empty: ${resultLog}`
 			);
 		}
 
-		assertEqual(result.value, expected, logResult(result));
-	});
-}
-
-testParser.todo = <T>(
-	name: string,
-	parser?: Parser<T>,
-	content?: string,
-	expected?: T
-) => {
-	it.todo(name);
-};
-
-export function testParserFails<T>(
-	name: string,
-	parser: Parser<T>,
-	content: string
-) {
-	it(name, () => {
-		const result = parser.run(content);
-
-		assert.ok(
-			isParseFailure(result),
-			`Parsing test ${name} succeeded when it was supposed to fail:
-${logResult(result)}`
+		assertEqual(
+			result.value,
+			expected,
+			`Expected parse result to be ${expected}: ${resultLog}`
 		);
-	});
+	}
+
+	matches(content: string) {
+		const result = this.parser.run(content);
+
+		const resultLog = logResult(result);
+
+		assert(result.success, `Expected parse to be sucessful: ${resultLog}`);
+	}
+
+	fails(content: string) {
+		const result = this.parser.run(content);
+
+		assert(
+			isParseFailure(result),
+			`Expected parse to fail but it succeeded: ${logResult(result)}`
+		);
+	}
 }
 
-testParserFails.todo = <T>(
-	name: string,
-	parser?: Parser<T>,
-	content?: string
-) => {
-	it.todo(name);
-};
+export function testParser<T>(parser: Parser<T>) {
+	return new ParseTester(parser);
+}

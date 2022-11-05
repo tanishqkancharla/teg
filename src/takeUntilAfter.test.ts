@@ -1,26 +1,28 @@
 import { char } from "./char";
 import { str } from "./str";
 import { takeUntilAfter, takeUpTo } from "./takeUntilAfter";
-import { testParser, testParserFails } from "./testParser";
+import { testParser } from "./testParser";
 
 describe("takeUntilAfter", () => {
-	const parser = takeUntilAfter(char("b"));
+	const charTest = testParser(takeUntilAfter(char("b")));
 
-	testParser("works", parser, "aaab", "aaa");
+	it("works", () => charTest.parses("aaab", "aaa"));
 
-	testParserFails("fails on non-match", parser, "aaa");
+	it("fails on non-match", () => charTest.fails("aaa"));
 
-	const stringParser = takeUntilAfter(str("def"));
+	const stringTest = testParser(takeUntilAfter(str("def")));
 
-	testParser("works", stringParser, "abcdef", "abc", true);
+	it("works with strings", () => stringTest.parses("abcdef", "abc"));
 });
 
 describe("takeUpTo", () => {
-	const parser = takeUpTo(char("b"));
+	const test = testParser(takeUpTo(char("b")));
 
-	testParser("works", parser, "aaab", "aaa", false);
+	it("works", () => {
+		test.parses("aaab", "aaa", false);
+	});
 
-	const stringParser = takeUpTo(str("def"));
-
-	testParser("works", stringParser, "abcdef", "abc", false);
+	it("works", () => {
+		testParser(takeUpTo(str("def"))).parses("abcdef", "abc", false);
+	});
 });
