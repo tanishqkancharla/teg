@@ -1,6 +1,6 @@
-import { Parser } from "./Parser";
-import { ParseSuccess } from "./ParseResult";
-import { FixedSizeArray, ParserTokenArray } from "./parseUtils";
+import { Parser } from "./Parser"
+import { ParseSuccess } from "./ParseResult"
+import { FixedSizeArray, ParserTokenArray } from "./parseUtils"
 
 // This overload is what lets sequence type the parser when passed in
 // a constant array like `[char("a"),char("b"),char("c")]`
@@ -11,7 +11,7 @@ export function sequence<
 >(
 	parsers: ParserArray,
 	delimiter?: Parser<Delimiter>
-): Parser<ParserTokenArray<ParserArray>>;
+): Parser<ParserTokenArray<ParserArray>>
 
 export function sequence<
 	N extends number,
@@ -20,7 +20,7 @@ export function sequence<
 >(
 	parsers: ParserArray,
 	delimiter?: Parser<Delimiter>
-): Parser<ParserTokenArray<ParserArray>>;
+): Parser<ParserTokenArray<ParserArray>>
 
 /**
  * Match the given parsers in sequence (or fail)
@@ -39,32 +39,32 @@ export function sequence<
 	return new Parser((stream) => {
 		// type SeqParserTokenArray = ParserTokenArray<ParserArray>;
 		// type SeqParserToken = SeqParserTokenArray[keyof SeqParserTokenArray];
-		const seqValues = [] as any;
+		const seqValues = [] as any
 
 		for (const parser of parsers) {
-			const result = parser.run(stream);
+			const result = parser.run(stream)
 
 			if (result instanceof ParseSuccess) {
-				const { value, stream: newStream } = result;
-				seqValues.push(value);
-				stream = newStream;
+				const { value, stream: newStream } = result
+				seqValues.push(value)
+				stream = newStream
 
-				const notAtEnd = seqValues.length < parsers.length;
+				const notAtEnd = seqValues.length < parsers.length
 
 				if (delimiter && notAtEnd) {
-					const { stream: afterDelimStream } = delimiter.run(newStream);
+					const { stream: afterDelimStream } = delimiter.run(newStream)
 
 					if (result instanceof ParseSuccess) {
-						stream = afterDelimStream;
+						stream = afterDelimStream
 					} else {
-						return result;
+						return result
 					}
 				}
 			} else {
-				return result;
+				return result
 			}
 		}
 
-		return new ParseSuccess(seqValues, stream);
-	}, "sequence");
+		return new ParseSuccess(seqValues, stream)
+	}, "sequence")
 }

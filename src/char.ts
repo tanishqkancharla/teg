@@ -1,5 +1,5 @@
-import { Parser } from "./Parser";
-import { ParseFailure, ParseSuccess } from "./ParseResult";
+import { Parser } from "./Parser"
+import { ParseFailure, ParseSuccess } from "./ParseResult"
 
 /**
  * Consume a single amtching character.
@@ -7,11 +7,11 @@ import { ParseFailure, ParseSuccess } from "./ParseResult";
  */
 export const char = <Char extends string>(c: Char): Parser<Char> =>
 	new Parser((stream) => {
-		const value = stream.head() as Char | undefined;
+		const value = stream.head() as Char | undefined
 
 		if (value === c) {
-			return new ParseSuccess(value, stream.move(1));
+			return new ParseSuccess(value, stream.move(1))
 		}
 
-		return new ParseFailure(`Char did not match ${JSON.stringify(c)}`, stream);
-	}, `char ("${c}")`);
+		return new ParseFailure(`Char did not match ${JSON.stringify(c)}`, stream)
+	}, `char ("${c}")`)

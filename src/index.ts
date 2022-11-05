@@ -1,20 +1,20 @@
-import { alphaNumeric, digit, hexDigit, lower, upper } from "./alphanumeric";
-import { any, end } from "./any";
-import { between, prefix, suffix } from "./between";
-import { char } from "./char";
-import { line } from "./line";
-import { lookahead } from "./lookahead";
-import { maybe } from "./maybe";
-import { nOrMore, oneOrMore, zeroOrMore } from "./nOrMore";
-import { not } from "./not";
-import { oneOf } from "./oneOf";
-import { Parser } from "./Parser";
-import { ParseFailure, ParseResult, ParseSuccess } from "./ParseResult";
-import { ParserStream } from "./ParserStream";
-import { isParseFailure, isParseSuccess, logResult } from "./parseUtils";
-import { sequence } from "./sequence";
-import { str } from "./str";
-import { takeUntilAfter, takeUpTo } from "./takeUntilAfter";
+import { alphaNumeric, digit, hexDigit, lower, upper } from "./alphanumeric"
+import { any, end } from "./any"
+import { between, prefix, suffix } from "./between"
+import { char } from "./char"
+import { line } from "./line"
+import { lookahead } from "./lookahead"
+import { maybe } from "./maybe"
+import { nOrMore, oneOrMore, zeroOrMore } from "./nOrMore"
+import { not } from "./not"
+import { oneOf } from "./oneOf"
+import { Parser } from "./Parser"
+import { ParseFailure, ParseResult, ParseSuccess } from "./ParseResult"
+import { ParserStream } from "./ParserStream"
+import { isParseFailure, isParseSuccess, logResult } from "./parseUtils"
+import { sequence } from "./sequence"
+import { str } from "./str"
+import { takeUntilAfter, takeUpTo } from "./takeUntilAfter"
 
 export {
 	logResult,
@@ -25,7 +25,7 @@ export {
 	ParserStream,
 	isParseFailure,
 	isParseSuccess,
-};
+}
 export {
 	str,
 	nOrMore,
@@ -42,5 +42,5 @@ export {
 	not,
 	char,
 	takeUpTo,
-};
-export { line, lower, upper, digit, alphaNumeric, hexDigit, end, any };
+}
+export { line, lower, upper, digit, alphaNumeric, hexDigit, end, any }

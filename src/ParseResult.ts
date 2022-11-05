@@ -1,80 +1,78 @@
-import { ParserStream } from "./ParserStream";
+import { ParserStream } from "./ParserStream"
 
-export type ParseResult<T> = ParseSuccess<T> | ParseFailure;
+export type ParseResult<T> = ParseSuccess<T> | ParseFailure
 
 interface ParseResultI<T> {
-	success: boolean;
+	success: boolean
 
-	map<S>(fn: (arg: T) => S): ParseResult<S>;
+	map<S>(fn: (arg: T) => S): ParseResult<S>
 
 	bimap<S>(
 		successFn: (arg: T) => S,
 		failFn: (error: string) => string
-	): ParseResult<S>;
+	): ParseResult<S>
 
-	chain<S>(
-		fn: (val: T, stream: ParserStream) => ParseResult<S>
-	): ParseResult<S>;
+	chain<S>(fn: (val: T, stream: ParserStream) => ParseResult<S>): ParseResult<S>
 
 	fold<S>(
 		successFn: (res: ParseSuccess<T>) => S,
 		failFn: (res: ParseFailure) => S
-	): S;
+	): S
 }
 
 export class ParseSuccess<T> implements ParseResultI<T> {
-	success = true;
+	success = true
 	constructor(public value: T, public stream: ParserStream) {}
 
 	map<S>(fn: (arg: T) => S) {
-		return new ParseSuccess(fn(this.value), this.stream);
+		return new ParseSuccess(fn(this.value), this.stream)
 	}
 
 	bimap<S>(successFn: (arg: T) => S, failFn: (error: string) => string) {
-		return new ParseSuccess(successFn(this.value), this.stream);
+		return new ParseSuccess(successFn(this.value), this.stream)
 	}
 
 	chain<S>(
 		fn: (val: T, stream: ParserStream) => ParseResult<S>
 	): ParseResult<S> {
-		return fn(this.value, this.stream);
+		return fn(this.value, this.stream)
 	}
 
 	fold<S>(
 		successFn: (res: ParseSuccess<T>) => S,
 		failFn: (res: ParseFailure) => S
 	) {
-		return successFn(this);
+		return successFn(this)
 	}
 }
 
 export class ParseFailure implements ParseResultI<string> {
-	success = false;
+	success = false
 	constructor(public value: string, public stream: ParserStream) {}
 
 	map<S>(fn: (arg: any) => S) {
-		return this;
+		return this
 	}
 
 	bimap<S>(successFn: (arg: any) => S, failFn: (error: string) => string) {
-		return new ParseFailure(failFn(this.value), this.stream);
+		return new ParseFailure(failFn(this.value), this.stream)
 	}
 
 	chain<S>(
 		fn: (val: any, stream: ParserStream) => ParseResult<S>
 	): ParseResult<any> {
-		return this;
+		return this
 	}
 
 	fold<S>(
 		successFn: (res: ParseSuccess<any>) => S,
 		failFn: (res: ParseFailure) => S
 	) {
-		return failFn(this);
+		return failFn(this)
 	}
 
 	/** Add an error scope to this parse failure's message */
 	extend(scope: string) {
-		return new ParseFailure(`${this.value}\n${scope}`, this.stream);
+		return new ParseFailure(`${this.value}\n${scope}`, this.stream)
 	}
 }

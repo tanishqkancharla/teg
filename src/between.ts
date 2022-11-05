@@ -1,5 +1,5 @@
-import { Parser } from "./Parser";
-import { sequence } from "./sequence";
+import { Parser } from "./Parser"
+import { sequence } from "./sequence"
 
 /**
  * Only matches the middle parser if it is surrounded by the `left` and `right`
@@ -15,7 +15,7 @@ export const between = <L, T, R>(
 ): Parser<T> =>
 	sequence([left, parser, right])
 		.map((v) => v[1])
-		.withErrorScope("between");
+		.withErrorScope("between")
 
 /**
  * Only matches the given `parser` if it is prefixed by `prefix`
@@ -26,7 +26,7 @@ export const between = <L, T, R>(
 export const prefix = <P, T>(prefix: Parser<P>, parser: Parser<T>): Parser<T> =>
 	sequence([prefix, parser])
 		.map((v) => v[1])
-		.withErrorScope("prefix");
+		.withErrorScope("prefix")
 
 /**
  * Only matches the given `parser` if it is suffixed by `suffix`
@@ -37,4 +37,4 @@ export const prefix = <P, T>(prefix: Parser<P>, parser: Parser<T>): Parser<T> =>
 export const suffix = <T, S>(parser: Parser<T>, suffix: Parser<S>): Parser<T> =>
 	sequence([parser, suffix])
 		.map((v) => v[0])
-		.withErrorScope("suffix");
+		.withErrorScope("suffix")
