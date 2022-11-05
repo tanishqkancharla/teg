@@ -1,8 +1,8 @@
 import { char } from "./char";
-import { testParser, testParserFails } from "./testParser";
+import { testParser } from "./testParser";
 
 describe("char", () => {
-	testParser("works", char("a"), "a", "a");
+	it("works", () => testParser(char("a")).parses("a", "a"));
 
-	testParserFails("fails on non-matching char", char("a"), "b");
+	it("fails on non-matching char", () => testParser(char("a")).fails("b"));
 });
