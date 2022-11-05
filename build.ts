@@ -1,5 +1,4 @@
 import { exec as callbackExec } from "child_process";
-import * as dts from "dts-bundle";
 import esbuild from "esbuild";
 import util from "util";
 
@@ -7,15 +6,17 @@ const exec = util.promisify(callbackExec);
 
 async function build() {
 	await Promise.all([
+		exec("npx tsc"),
 		esbuild.build({
-			entryPoints: ["src/index.ts"],
+			entryPoints: ["src/index.ts", "src/testParser.ts"],
+			platform: "node",
 			outdir: "dist",
 			format: "esm",
 			bundle: true,
 		}),
-		exec("npx tsc"),
 		esbuild.build({
-			entryPoints: ["src/index.ts"],
+			entryPoints: ["src/index.ts", "src/testParser.ts"],
+			platform: "node",
 			outdir: "dist",
 			format: "cjs",
 			bundle: true,
@@ -24,11 +25,6 @@ async function build() {
 			},
 		}),
 	]);
-
-	dts.bundle({
-		name: "index",
-		main: "dist/index.d.ts",
-	});
 }
 
 build();

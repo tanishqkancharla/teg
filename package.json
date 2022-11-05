@@ -3,6 +3,9 @@
 	"version": "0.11.2",
 	"author": "Tanishq Kancharla <tanishqkancharla3@gmail.com>",
 	"description": "A tiny parser framework",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"keywords": [
 		"parser",
 		"PEG",
@@ -12,20 +15,24 @@
 	],
 	"license": "MIT",
 	"exports": {
-		"./testParser": "./dist/testParser.js",
-		".": "./dist/index.js"
+		"./testParser": {
+			"require": "./dist/testParser.cjs",
+			"import": "./dist/testParser.js",
+			"types": "./dist/testParser.d.ts"
+		},
+		".": {
+			"require": "./dist/index.cjs",
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
 	},
 	"typesVersions": {
 		"*": {
-			"index": [
-				"./dist/index.d.ts"
-			],
 			"testParser": [
-				"./dist/testParser.d.ts"
+				"dist/testParser"
 			]
 		}
 	},
-	"types": "dist/index.d.ts",
 	"files": [
 		"dist/*"
 	],
@@ -45,10 +52,11 @@
 		"@types/dts-bundle": "^0.0.32",
 		"@types/jest": "^27.5.0",
 		"dts-bundle": "^0.7.3",
-		"esbuild": "^0.15.1",
+		"esbuild": "^0.15.13",
+		"esbuild-jest": "^0.5.0",
 		"jest": "^28.1.0",
 		"ts-jest": "^28.0.5",
-		"tsx": "^3.11.0",
-		"typescript": "^4.6.4"
+		"ts-node": "^10.9.1",
+		"tsx": "^3.11.0"
 	}
 }
