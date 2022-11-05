@@ -1,4 +1,4 @@
-import { char, oneOrMore, Parser, prefix, str } from "teg-parser/index";
+import { char, oneOrMore, Parser, prefix, str } from "teg-parser";
 import { RichTextContent, richTextParser } from "./richText";
 
 export type BlockquoteBlock = {

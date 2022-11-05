@@ -2,7 +2,7 @@
 // Paragraph
 // ============================================================================
 
-import { Parser } from "teg-parser/index";
+import { Parser } from "teg-parser";
 import { RichTextContent, richTextParser } from "./richText";
 
 export type ParagraphBlock = {

@@ -6,7 +6,7 @@ describe("Blockquote", () => {
 		"Blockquote works",
 		blockquote,
 		`> Hello
->*bold*\`code\``,
+> *bold*\`code\``,
 		{
 			type: "blockquote",
 			content: [

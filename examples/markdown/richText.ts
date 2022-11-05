@@ -17,7 +17,10 @@ import {
 	takeUntilAfter,
 	zeroOrMore,
 } from "teg-parser";
-import { concat } from "teg-parser/dist/parseUtils";
+
+function concat(strings: string[]) {
+	return strings.join("");
+}
 
 export type RichTextToken =
 	| ItalicToken

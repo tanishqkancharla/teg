@@ -2,7 +2,7 @@
 // Markdown Doc
 // ============================================================================
 
-import { char, oneOf, oneOrMore, Parser } from "teg-parser/index";
+import { char, oneOf, oneOrMore, Parser } from "teg-parser";
 import { blockquote, BlockquoteBlock } from "./blockquote";
 import { divider, DividerBlock } from "./divider";
 import { heading, HeadingBlock } from "./heading";
