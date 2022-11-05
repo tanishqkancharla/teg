@@ -49,14 +49,10 @@
 		"bundlesize": "esbuild src/index.ts --bundle --minify --outfile=out.js ; rm out.js"
 	},
 	"devDependencies": {
-		"@types/dts-bundle": "^0.0.32",
 		"@types/jest": "^27.5.0",
-		"dts-bundle": "^0.7.3",
 		"esbuild": "^0.15.13",
 		"esbuild-jest": "^0.5.0",
 		"jest": "^28.1.0",
-		"ts-jest": "^28.0.5",
-		"ts-node": "^10.9.1",
 		"tsx": "^3.11.0"
 	}
 }
