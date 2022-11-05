@@ -6,7 +6,7 @@ Teg is a tiny declarative parser toolkit written in Typescript. It aims to be a 
 
 * 0 dependencies
 * Browser or Node
-* 4kb minified (but highly tree-shakeable!)
+* 4.4kb minified (but highly tree-shakeable!)
 * Well-tested
 * Straightforward and semantic by default
 * But also powerful and composable API.
@@ -44,7 +44,7 @@ type CodeBlockToken = {
 const codeBlockParser: Parser<CodeBlockToken> = sequence([
   str("```"),
   maybe(line), // Parse the language
-  takeUntilAfter(str("\n```\n"))
+  takeUntilAfter(str("\n```\n")) // Take until after the ending triple backtick
 ])
   .map(([_, lang, content]) => ({ lang, content }))
 
@@ -198,31 +198,30 @@ const alphaNumeric: Parser<string>
 
 ## Examples
 
-TODO to build out more example parsers. However, you can see an example of a bigger parser I use for my custom blog post format: [https://github.com/tanishqkancharla/tk-parser/blob/main/src/index.ts](https://github.com/tanishqkancharla/tk-parser/blob/main/src/index.ts)
+TODO to build out more example parsers. However, you can see an example of a bigger parser I use for my custom blog post format here: [https://github.com/tanishqkancharla/tk-parser/blob/main/src/index.ts](https://github.com/tanishqkancharla/tk-parser/blob/main/src/index.ts)
 
 ## Testing parsers
 
-Teg ships utilities to test parsers at `teg-parser/testParser`. Its exports are:
+Teg ships utilities to test parsers at `teg-parser/testParser`. It is used like this:
 
 ```tsx
-export function testParser<T>(
-	name: string,
-	parser: Parser<T>,
-	content: string,
-	expected: T,
-  assertEmpty = true
-)
+import { testParser } from "teg-parser/testParser";
 
-export function testParserFails<T>(
-	name: string,
-	parser: Parser<T>,
-	content: string
-)
+const test = testParser(parser)
+
+/* Assert the content passed in completely parses to the expected value */
+test.parses(content, expected)
+
+/* Assert the parser successfully matches the given content */
+test.matches(content)
+
+/* Assert the parser fails on the given */
+test.fails(content)
 ```
 
 ## ESM and CJS
 
-`teg` comes with out of the box support for both ESM and CJS. However, a lot of parsers in teg are just simple utilities, so if you use ESM, you will be probably be able to tree-shake away a significant portion of the library.
+`teg` comes with out of the box support for both ESM and CJS. The correct format will be used depending on whether you use `import` (ESM) or `require` (CJS). However, a lot of parsers in teg are just simple utilities, so if you use ESM, you will be probably be able to tree-shake away a significant portion of the library.
 
 ## Name
 

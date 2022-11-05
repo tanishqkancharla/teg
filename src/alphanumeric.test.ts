@@ -4,12 +4,12 @@ import { testParser } from "./testParser";
 describe("alphanumeric", () => {
 	describe("lower", () => {
 		it("works", () => testParser(lower).parses("h", "h"));
-		it("works", () => testParser(lower).fails("H"));
+		it("fails on uppercase", () => testParser(lower).fails("H"));
 	});
 
 	describe("upper", () => {
 		it("works", () => testParser(upper).parses("H", "H"));
-		it("works", () => testParser(upper).fails("h"));
+		it("fails on lowercase", () => testParser(upper).fails("h"));
 	});
 
 	describe("letter", () => {
