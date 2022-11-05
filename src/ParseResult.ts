@@ -3,6 +3,8 @@ import { ParserStream } from "./ParserStream";
 export type ParseResult<T> = ParseSuccess<T> | ParseFailure;
 
 interface ParseResultI<T> {
+	success: boolean;
+
 	map<S>(fn: (arg: T) => S): ParseResult<S>;
 
 	bimap<S>(
@@ -21,6 +23,7 @@ interface ParseResultI<T> {
 }
 
 export class ParseSuccess<T> implements ParseResultI<T> {
+	success = true;
 	constructor(public value: T, public stream: ParserStream) {}
 
 	map<S>(fn: (arg: T) => S) {
@@ -46,6 +49,7 @@ export class ParseSuccess<T> implements ParseResultI<T> {
 }
 
 export class ParseFailure implements ParseResultI<string> {
+	success = false;
 	constructor(public value: string, public stream: ParserStream) {}
 
 	map<S>(fn: (arg: any) => S) {

@@ -2,18 +2,18 @@ import { char } from "./char";
 import { sequence } from "./sequence";
 import { str } from "./str";
 import { takeUntilAfter, takeUpTo } from "./takeUntilAfter";
-import { testParser, testParserFails } from "./testParser";
+import { testParser } from "./testParser";
 
 describe("takeUntilAfter", () => {
-	const parser = takeUntilAfter(char("b"));
+	const charTest = testParser(takeUntilAfter(char("b")));
 
-	testParser("works", parser, "aaab", "aaa");
+	it("works", () => charTest.works("aaab", "aaa"));
 
-	testParserFails("fails on non-match", parser, "aaa");
+	it("fails on non-match", () => charTest.fails("aaa"));
 
-	const stringParser = takeUntilAfter(str("def"));
+	const stringTest = testParser(takeUntilAfter(str("def")));
 
-	testParser("works", stringParser, "abcdef", "abc", true);
+	it("works with strings", () => stringTest.works("abcdef", "abc"));
 });
 
 describe("takeUpTo", () => {
