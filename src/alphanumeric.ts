@@ -1,6 +1,8 @@
+import { oneOrMore } from "./nOrMore"
 import { oneOf } from "./oneOf"
 import { Parser } from "./Parser"
 import { ParseFailure, ParseSuccess } from "./ParseResult"
+import { concat } from "./parseUtils"
 
 const lowerLetters = [
 	"a",
@@ -56,6 +58,13 @@ export const letter: Parser<string> = oneOf([lower, upper]).withErrorScope(
 	"letter"
 )
 
+/**
+ * Match one or more English alphabet letters
+ */
+export const word: Parser<string> = oneOrMore(letter)
+	.map(concat)
+	.withErrorScope("text")
+
 const digitChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 /** Match a single digit from 0 to 9 */
@@ -66,6 +75,11 @@ export const digit: Parser<string> = new Parser((stream) => {
 	}
 	return new ParseFailure(`${value} was not a digit`, stream)
 }).withErrorScope("digit")
+
+export const integer: Parser<number> = oneOrMore(digit)
+	.map(concat)
+	.map(Number.parseInt)
+	.withErrorScope("integer")
 
 const hexLetterChars = lowerLetters.slice(0, 6)
 const hexDigitChars = [

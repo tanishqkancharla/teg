@@ -9,6 +9,6 @@ describe("whitespace", () => {
 	})
 
 	it("Works on multiple different types", () => {
-		test.parses(" \n\t \r \t hello", " \n\t \r \t ", false)
+		test.parsePartial(" \n\t \r \t hello", " \n\t \r \t ")
 	})
 })

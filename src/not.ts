@@ -1,6 +1,5 @@
 import { Parser } from "./Parser"
 import { ParseFailure, ParseSuccess } from "./ParseResult"
-import { isParseFailure } from "./parseUtils"
 
 /**
  * Matches if the given parser fails.
@@ -13,7 +12,7 @@ export const not = (parser: Parser<any>): Parser<string> =>
 		}
 		const result = parser.run(stream)
 
-		if (isParseFailure(result)) {
+		if (result.isFailure()) {
 			return new ParseSuccess(stream.head(), stream.move(1))
 		} else {
 			return new ParseFailure(

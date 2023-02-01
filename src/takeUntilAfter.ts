@@ -1,12 +1,12 @@
-import { suffix } from "./between"
 import { lookahead } from "./lookahead"
 import { zeroOrMore } from "./nOrMore"
 import { not } from "./not"
 import { Parser } from "./Parser"
-import { concat } from "./parseUtils"
+import { concat, takeFirst } from "./parseUtils"
+import { template } from "./template"
 
 /**
- * Keep consuming until the given parser succeeds.
+ * Keep consuming until after the given parser succeeds.
  * Returns all the characters that were consumed before the parser succeded.
  *
  * @example
@@ -14,7 +14,16 @@ import { concat } from "./parseUtils"
  * doesn't include the newline itself in the result
  */
 export const takeUntilAfter = <T>(parser: Parser<T>): Parser<string> =>
-	suffix(zeroOrMore(not(parser)), parser).map(concat)
+	template`${zeroOrMore(not(parser))}${parser}`.map(takeFirst).map(concat)
 
+/**
+ * Keep consuming until before the given parser succeeds.
+ * Returns all the characters that were consumed before the parser succeded.
+ *
+ * @example
+ * `takeUpTo(char("\n"))` takes all chars until before the newline
+ */
 export const takeUpTo = <T>(parser: Parser<T>): Parser<string> =>
-	suffix(zeroOrMore(not(parser)), lookahead(parser)).map(concat)
+	template`${zeroOrMore(not(parser))}${lookahead(parser)}`
+		.map(takeFirst)
+		.map(concat)

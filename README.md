@@ -20,20 +20,20 @@ npm install teg-parser
 ## Usage
 
 ```ts
-import { prefix, str, line } from "teg-parser"
+import { template, line } from "teg-parser"
 
 /** Parse markdown level 1 headings */
-const h1Parser = prefix(str("# "), line);
+const h1Parser = template`# ${line}`;
 
 const result = h1Parser.run("# heading\n");
 
-console.log(result.content) // Prints "heading"
+assert.equal(result.content, "heading")
 ```
 
 Often, you'll want to do some processing on a successful parse. To make this ergonomic, parsers define a `map` function that will let you transform successfully parsed content.
 
 ```ts
-import {sequence, str, maybe, line, takeUntilAfter } from "teg-parser"
+import { template, maybe, zeroOrMore, line, takeUntilAfter } from "teg-parser"
 
 type CodeBlockToken = {
   lang: string | undefined
@@ -41,16 +41,13 @@ type CodeBlockToken = {
 }
 
 /** Parse markdown codeblocks */
-const codeBlockParser: Parser<CodeBlockToken> = sequence([
-  str("```"),
-  maybe(line), // Parse the language
-  takeUntilAfter(str("\n```\n")) // Take until after the ending triple backtick
-])
-  .map(([_, lang, content]) => ({ lang, content }))
+const codeBlockParser: Parser<CodeBlockToken> = template`\`\`\`${maybe(line)}
+${zeroOrMore(line, literal("\n"))}
+\`\`\`
+`.map(([lang, content]) => ({ lang, content }))
 
 const result = codeBlockParser.run(
-`
-\`\`\`ts
+`\`\`\`ts
 const code = runCode();
 \`\`\`
 `
@@ -65,6 +62,11 @@ assert.equal(
 )
 
 ```
+
+> Hello
+> Hwo
+> nflefn
+> flewjfwe
 
 Since it's written in typescript, types are inferred as much as possible.
 

@@ -1,6 +1,5 @@
 import { ParseFailure, ParseResult, ParseSuccess } from "./ParseResult"
 import { ParserStream } from "./ParserStream"
-import { isParseFailure } from "./parseUtils"
 
 export class Parser<K> {
 	constructor(
@@ -16,7 +15,7 @@ export class Parser<K> {
 		try {
 			const result = this.parseFn(parserStream)
 
-			if (isParseFailure(result)) {
+			if (result.isFailure()) {
 				return result.extend(
 					`In middle of parsing ${this.errorScope} at ${startingIndex}`
 				)

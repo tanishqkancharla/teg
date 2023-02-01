@@ -1,8 +1,16 @@
-import { alphaNumeric, digit, hexDigit, lower, upper } from "./alphanumeric"
+import {
+	alphaNumeric,
+	digit,
+	hexDigit,
+	integer,
+	lower,
+	upper,
+	word,
+} from "./alphanumeric"
 import { any, end } from "./any"
-import { between, prefix, suffix } from "./between"
 import { char } from "./char"
 import { line } from "./line"
+import { literal } from "./literal"
 import { lookahead } from "./lookahead"
 import { maybe } from "./maybe"
 import { nOrMore, oneOrMore, zeroOrMore } from "./nOrMore"
@@ -11,23 +19,15 @@ import { oneOf } from "./oneOf"
 import { Parser } from "./Parser"
 import { ParseFailure, ParseResult, ParseSuccess } from "./ParseResult"
 import { ParserStream } from "./ParserStream"
-import { isParseFailure, isParseSuccess, logResult } from "./parseUtils"
 import { sequence } from "./sequence"
-import { str } from "./str"
 import { takeUntilAfter, takeUpTo } from "./takeUntilAfter"
+import { template } from "./template"
 
+// Utils, types
+export { Parser, ParseFailure, ParseResult, ParseSuccess, ParserStream }
+// Parsers
 export {
-	logResult,
-	Parser,
-	ParseFailure,
-	ParseResult,
-	ParseSuccess,
-	ParserStream,
-	isParseFailure,
-	isParseSuccess,
-}
-export {
-	str,
+	literal,
 	nOrMore,
 	zeroOrMore,
 	oneOrMore,
@@ -35,12 +35,21 @@ export {
 	sequence,
 	lookahead,
 	maybe,
-	between,
-	prefix,
-	suffix,
 	takeUntilAfter,
+	takeUpTo,
+	template,
 	not,
 	char,
-	takeUpTo,
 }
-export { line, lower, upper, digit, alphaNumeric, hexDigit, end, any }
+export {
+	line,
+	lower,
+	upper,
+	digit,
+	alphaNumeric,
+	hexDigit,
+	integer,
+	word,
+	end,
+	any,
+}

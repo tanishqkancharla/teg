@@ -1,6 +1,5 @@
 import { Parser } from "./Parser"
 import { ParseSuccess } from "./ParseResult"
-import { isParseFailure } from "./parseUtils"
 
 /**
  * Look ahead in the stream to match the given parser.
@@ -10,7 +9,7 @@ export const lookahead = <T>(parser: Parser<T>): Parser<T> =>
 	new Parser((stream) => {
 		const result = parser.run(stream)
 
-		if (isParseFailure(result)) {
+		if (result.isFailure()) {
 			return result.extend("Lookahead failed.")
 		} else {
 			return new ParseSuccess(result.value, stream)

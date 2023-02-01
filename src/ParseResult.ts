@@ -3,8 +3,6 @@ import { ParserStream } from "./ParserStream"
 export type ParseResult<T> = ParseSuccess<T> | ParseFailure
 
 interface ParseResultI<T> {
-	success: boolean
-
 	map<S>(fn: (arg: T) => S): ParseResult<S>
 
 	bimap<S>(
@@ -18,10 +16,14 @@ interface ParseResultI<T> {
 		successFn: (res: ParseSuccess<T>) => S,
 		failFn: (res: ParseFailure) => S
 	): S
+
+	isSuccess(): this is ParseSuccess<T>
+	isFailure(): this is ParseFailure
+
+	toString(): string
 }
 
 export class ParseSuccess<T> implements ParseResultI<T> {
-	success = true
 	constructor(public value: T, public stream: ParserStream) {}
 
 	map<S>(fn: (arg: T) => S) {
@@ -44,10 +46,24 @@ export class ParseSuccess<T> implements ParseResultI<T> {
 	) {
 		return successFn(this)
 	}
+
+	isSuccess(): this is ParseSuccess<T> {
+		return true
+	}
+
+	isFailure(): this is ParseFailure {
+		return false
+	}
+
+	toString(): string {
+		return `
+Parse Success
+"${this.stream.content}" ==> ${JSON.stringify(this.value, undefined, "  ")}
+`
+	}
 }
 
 export class ParseFailure implements ParseResultI<string> {
-	success = false
 	constructor(public value: string, public stream: ParserStream) {}
 
 	map<S>(fn: (arg: any) => S) {
@@ -74,5 +90,23 @@ export class ParseFailure implements ParseResultI<string> {
 	/** Add an error scope to this parse failure's message */
 	extend(scope: string) {
 		return new ParseFailure(`${this.value}\n${scope}`, this.stream)
+	}
+
+	isSuccess(): this is ParseSuccess<any> {
+		return false
+	}
+
+	isFailure(): this is ParseFailure {
+		return true
+	}
+
+	toString(): string {
+		return `
+Parse Failure
+
+${this.stream}
+
+Failed at index ${this.stream.index}: ${this.value}
+`
 	}
 }

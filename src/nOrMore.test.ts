@@ -1,6 +1,6 @@
 import { char } from "./char"
+import { literal } from "./literal"
 import { nOrMore, zeroOrMore } from "./nOrMore"
-import { str } from "./str"
 import { testParser } from "./testParser"
 
 describe("nOrMore", () => {
@@ -25,7 +25,7 @@ describe("nOrMore", () => {
 	})
 
 	it("Rolls back when stream ends at a delimiter", () => {
-		parserWithDelim.parses("ababab", ["a", "a", "a"], false)
+		parserWithDelim.parsePartial("ababab", ["a", "a", "a"])
 	})
 
 	it("Fails when delimiter not present", () => {
@@ -42,12 +42,12 @@ describe("zeroOrMore", () => {
 	})
 
 	describe("Multiple characters", () => {
-		const parser = testParser(zeroOrMore(str("abba")))
+		const parser = testParser(zeroOrMore(literal("abba")))
 
 		it("Works", () => parser.parses("abba", ["abba"]))
 		it("Succeeds when empty", () => parser.parses("", []))
 
-		const parserWithDelim = testParser(zeroOrMore(str("abba"), char("C")))
+		const parserWithDelim = testParser(zeroOrMore(literal("abba"), char("C")))
 
 		it("Works when delimited", () => {
 			parserWithDelim.parses("abbaCabba", ["abba", "abba"])

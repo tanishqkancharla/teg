@@ -1,23 +1,35 @@
 import { assert, assertEqual } from "./assertUtils"
 import { Parser } from "./Parser"
-import { isParseFailure, logResult } from "./parseUtils"
 
 class ParseTester<T> {
 	constructor(private parser: Parser<T>) {}
 
-	parses(content: string, expected: T, assertEmpty = true) {
+	parses(content: string, expected: T) {
 		const result = this.parser.run(content)
 
-		const resultLog = logResult(result)
+		const resultLog = result.toString()
 
-		assert(result.success, `Expected parse to be sucessful: ${resultLog}`)
+		assert(result.isSuccess(), `Expected parse to be sucessful: ${resultLog}`)
+		assert(
+			result.stream.isEmpty(),
+			`Expected parse stream to be empty after parsing.
+(If you don't want to assert emptiness, use .parsePartial)
+${resultLog}`
+		)
 
-		if (assertEmpty) {
-			assert(
-				result.stream.isEmpty(),
-				`Expected parse stream to be empty: ${resultLog}`
-			)
-		}
+		assertEqual(
+			result.value,
+			expected,
+			`Expected parse result to be ${expected}: ${resultLog}`
+		)
+	}
+
+	parsePartial(content: string, expected: T) {
+		const result = this.parser.run(content)
+
+		const resultLog = result.toString()
+
+		assert(result.isSuccess(), `Expected parse to be sucessful: ${resultLog}`)
 
 		assertEqual(
 			result.value,
@@ -29,17 +41,17 @@ class ParseTester<T> {
 	matches(content: string) {
 		const result = this.parser.run(content)
 
-		const resultLog = logResult(result)
+		const resultLog = result.toString()
 
-		assert(result.success, `Expected parse to be sucessful: ${resultLog}`)
+		assert(result.isSuccess(), `Expected parse to be sucessful: ${resultLog}`)
 	}
 
 	fails(content: string) {
 		const result = this.parser.run(content)
 
 		assert(
-			isParseFailure(result),
-			`Expected parse to fail but it succeeded: ${logResult(result)}`
+			result.isFailure(),
+			`Expected parse to fail but it succeeded: ${result.toString()}`
 		)
 	}
 }

@@ -4,7 +4,7 @@ import { concat } from "./parseUtils"
 import { sequence } from "./sequence"
 
 /** Matches a string */
-export const str = <T extends string>(str: T): Parser<T> =>
-	sequence(str.split("").map(char))
+export const literal = <T extends string>(value: T): Parser<T> =>
+	sequence(value.split("").map(char))
 		.map(concat)
-		.withErrorScope(`Str ${str}`) as Parser<T>
+		.withErrorScope(`Literal (${value})`) as Parser<T>

@@ -1,6 +1,5 @@
 import { Parser } from "./Parser"
 import { ParseFailure, ParseSuccess } from "./ParseResult"
-import { isParseSuccess } from "./parseUtils"
 
 /**
  * Match the given parser n or more times, with an optional delimiter parser
@@ -19,7 +18,7 @@ export const nOrMore = <T, D = never>(
 		while (!stream.isEmpty()) {
 			let result = parser.run(stream)
 
-			if (isParseSuccess(result)) {
+			if (result.isSuccess()) {
 				const { value, stream: newStream } = result
 				values.push(value)
 				stream = newStream

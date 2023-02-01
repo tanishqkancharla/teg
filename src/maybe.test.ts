@@ -10,6 +10,6 @@ describe("maybe", () => {
 	})
 
 	it("works on non-match", () => {
-		parser.parses("b", undefined, false)
+		parser.parsePartial("b", undefined)
 	})
 })

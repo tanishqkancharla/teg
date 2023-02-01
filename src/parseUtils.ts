@@ -1,36 +1,14 @@
 import { Parser } from "./Parser"
-import { ParseFailure, ParseResult, ParseSuccess } from "./ParseResult"
-
-export function isParseSuccess<T>(
-	result: ParseResult<T>
-): result is ParseSuccess<T> {
-	return result instanceof ParseSuccess
-}
-
-export function isParseFailure(
-	result: ParseResult<any>
-): result is ParseFailure {
-	return result instanceof ParseFailure
-}
-
-export function logResult(result: ParseResult<any>) {
-	if (isParseFailure(result)) {
-		return `
-Parse Failure
-
-${result.stream}
-
-Failed at index ${result.stream.index}: ${result.value}
-`
-	} else {
-		return `
-Parse Success
-"${result.stream.content}" ==> ${JSON.stringify(result.value, undefined, "  ")}
-`
-	}
-}
 
 export const concat = (strs: string[]) => strs.join("")
+
+export function takeFirst<T>(values: [T, ...any[]]): T {
+	return values[0]
+}
+
+export function takeLast<T>(values: [...any[], T]): T {
+	return values[values.length - 1]
+}
 
 // Helper types
 // Hover over the declare const to get a sense of what they do
@@ -53,7 +31,7 @@ type ParserArrayType<ParserArray extends readonly Parser<any>[]> =
 declare const type: ParserArrayType<typeof parsers>
 
 export type FixedSizeArray<N extends number, T> = N extends 0
-	? never[]
+	? []
 	: {
 			0: T
 			length: N

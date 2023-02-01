@@ -5,7 +5,7 @@ describe("any", () => {
 	const parser = testParser(any)
 
 	it("works", () => {
-		parser.parses("Hi", "H", false)
+		parser.parsePartial("Hi", "H")
 	})
 
 	it("fails on empty", () => {
