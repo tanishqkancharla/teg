@@ -10,6 +10,25 @@ describe("Readme example tests", () => {
 
 		assert(result.isSuccess())
 		assert.deepEqual(result.value, ["heading"])
+
+		const failResult = h1Parser.run("not a heading")
+
+		assert(failResult.isFailure())
+		assert.strictEqual(
+			failResult.toString(),
+			`
+Parse Failure
+
+|
+| not a heading
+| ^
+
+Failed at index 0: Char did not match "#"
+In middle of parsing char ("#") at 0
+In middle of parsing literal (# ) at 0
+In middle of parsing template at 0
+`
+		)
 	})
 
 	it("Code Blocks", () => {
@@ -21,10 +40,13 @@ describe("Readme example tests", () => {
 			.map((lines) => lines.map(([line]) => line).join("\n"))
 			.map((content) => ({ content }))
 
-		const result = blockquote.run(`> Line 1
+		const result = blockquote.run(
+			`
+> Line 1
 > Line 2
 > Line 3
-`)
+`.trim()
+		)
 
 		assert(result.isSuccess())
 		assert.deepEqual(result.value, {

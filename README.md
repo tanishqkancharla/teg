@@ -23,11 +23,30 @@ npm install teg-parser
 import { template, line } from "teg-parser"
 
 /** Parse markdown level 1 headings */
-const h1Parser = template`# ${line}`;
+const h1Parser = template`# ${line}`
 
-const result = h1Parser.run("# heading\n");
+const result = h1Parser.run("# heading\n")
 
-assert.equal(result.content, "heading")
+assert(result.isSuccess())
+assert.deepEqual(result.value, ["heading"])
+
+const failResult = h1Parser.run("not a heading")
+
+assert(failResult.isFailure())
+console.log(failResult)
+/**
+ * Logs
+Parse Failure
+
+|
+| not a heading
+| ^
+
+Failed at index 0: Char did not match "#"
+In middle of parsing char ("#") at 0
+In middle of parsing literal (# ) at 0
+In middle of parsing template at 0
+ */
 ```
 
 Often, you'll want to do some processing on a successful parse. To make this ergonomic, parsers define a `map` function that will let you transform successfully parsed content.
@@ -35,38 +54,22 @@ Often, you'll want to do some processing on a successful parse. To make this erg
 ```ts
 import { template, maybe, zeroOrMore, line, takeUntilAfter } from "teg-parser"
 
-type CodeBlockToken = {
-  lang: string | undefined
+type Blockquote = {
   content: string
 }
 
-/** Parse markdown codeblocks */
-const codeBlockParser: Parser<CodeBlockToken> = template`\`\`\`${maybe(line)}
-${zeroOrMore(line, literal("\n"))}
-\`\`\`
-`.map(([lang, content]) => ({ lang, content }))
+const blockquote: Parser<Blockquote> = zeroOrMore(template`> ${line}`)
+  .map((lines) => lines.map(([line]) => line).join("\n"))
+  .map((content) => ({ content }))
 
-const result = codeBlockParser.run(
-`\`\`\`ts
-const code = runCode();
-\`\`\`
-`
-);
+const result = blockquote.run(`> Line 1\n> Line 2\n> Line 3`)
 
-assert.equal(
-  result.content,
-  {
-    lang: "ts",
-    content: "const code = runCode();"
-  }
-)
+assert(result.isSuccess())
+assert.deepEqual(result.value, {
+  content: "Line 1\nLine 2\nLine 3",
+})
 
 ```
-
-> Hello
-> Hwo
-> nflefn
-> flewjfwe
 
 Since it's written in typescript, types are inferred as much as possible.
 
@@ -75,8 +78,21 @@ Much of the idea comes from [Chet Corcos's article on parsers](https://medium.co
 ## Combinators
 
 ```tsx
-/** Matches a string */
-export const str = <T extends string>(str: T) => Parser<T>
+/** Matches a literal string */
+export const literal = <T extends string>(value: T) => Parser<T>
+```
+
+```tsx
+/**
+ * Tagged template literal for parsing.
+ *
+ * "template`# ${line}`" will parse "# Heading" to ["Heading"]
+ *
+ * Can use multiple parsers together. Keep in mind parsers run greedily,
+ * so "template`${word}content`" will fail on "textcontent" b/c the `word` parser
+ * will match "textcontent", and then it will try to match the literal "content"
+ */
+export const template
 ```
 ```tsx
 /**
@@ -132,34 +148,6 @@ const maybe: <T>(parser: Parser<T>) => Parser<T | undefined>
 ```
 ```tsx
 /**
- * Only matches the middle parser if it is surrounded by the `left` and `right`
- * parsers
- *
- * @example
- * between(char("a"), char("b"), char("c")) => Parser<"b"> // Matches "abc"
- */
-const between: <L, T, R>(
-	left: Parser<L>,
-	parser: Parser<T>,
-	right: Parser<R>
-) => Parser<T>
-/**
- * Only matches the given `parser` if it is prefixed by `prefix`
- *
- * @example
- * prefix(char("a"), char("b")) => Parser<"b"> // Matches "ab"
- */
-const prefix: <P, T>(prefix: Parser<P>, parser: Parser<T>) => Parser<T>
-/**
- * Only matches the given `parser` if it is suffixed by `suffix`
- *
- * @example
- * suffix(char("b"), char("c")) => Parser<"b"> // Matches "bc"
- */
-const suffix: <T, S>(parser: Parser<T>, suffix: Parser<S>) => Parser<T>
-```
-```tsx
-/**
  * Keep consuming until the given parser succeeds.
  * Returns all the characters that were consumed before the parser succeded.
  *
@@ -168,9 +156,17 @@ const suffix: <T, S>(parser: Parser<T>, suffix: Parser<S>) => Parser<T>
  * doesn't include the newline itself in the result
  */
 const takeUntilAfter: <T>(parser: Parser<T>) => Parser<string>
+/**
+ * Keep consuming until before the given parser succeeds.
+ * Returns all the characters that were consumed before the parser succeded.
+ *
+ * @example
+ * `takeUpTo(char("\n"))` takes all chars until before the newline
+ */
+export const takeUpTo: <T>(parser: Parser<T>): Parser<string>
 ```
 
-## Built-in parsers
+## Built-in primitive parsers
 
 ```tsx
 /**
@@ -179,22 +175,29 @@ const takeUntilAfter: <T>(parser: Parser<T>) => Parser<string>
  */
 const line = takeUntilAfter(char("\n"));
 
-/** Matches a single lowercase letter */
+/** Matches a single lowercase English letter */
 const lower: Parser<string>
 
-/** Matches a single uppercase letter */
+/** Matches a single uppercase English letter */
 const upper: Parser<string>
 
-/** Matches a single letter, case insensitive */
+/** Matches a single English letter, case insensitive */
 const letter: Parser<string>
+
+/**
+ * Match an English word
+ */
+const word: Parser<string>
 
 /** Match a single digit from 0 to 9 */
 const digit: Parser<string>
 
+const integer: Parser<number>
+
 /** Match a single hexadecimal digit (0-9, A-F), case insensitive */
 const hexDigit: Parser<string>
 
-/** Match a single letter or digit */
+/** Match a single English letter or digit */
 const alphaNumeric: Parser<string>
 ```
 
@@ -211,13 +214,19 @@ import { testParser } from "teg-parser/testParser";
 
 const test = testParser(parser)
 
-/* Assert the content passed in completely parses to the expected value */
+/** Assert the content passed in completely parses to the expected value */
 test.parses(content, expected)
 
-/* Assert the parser successfully matches the given content */
+/**
+ * Assert the content gets parsed to the expected value, but without asserting
+ * all the content is consumed
+ */
+test.parsePartial(content, expected)
+
+/** Assert the parser successfully matches the given content */
 test.matches(content)
 
-/* Assert the parser fails on the given */
+/** Assert the parser fails on the given content */
 test.fails(content)
 ```
 
