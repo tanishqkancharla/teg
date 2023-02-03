@@ -8,6 +8,7 @@ Teg is a tiny declarative parser toolkit written in Typescript. It aims to be a 
 * Browser or Node
 * 4.4kb minified (but highly tree-shakeable!)
 * Well-tested
+* Helpful error messages
 * Straightforward and semantic by default
 * But also powerful and composable API.
 
@@ -38,14 +39,13 @@ console.log(failResult)
  * Logs
 Parse Failure
 
-|
 | not a heading
 | ^
 
 Failed at index 0: Char did not match "#"
-In middle of parsing char ("#") at 0
-In middle of parsing literal (# ) at 0
-In middle of parsing template at 0
+In middle of parsing char("#") at 0
+In middle of parsing literal("# ") at 0
+In middle of parsing template(literal("# "), line, literal("")) at 0
  */
 ```
 
@@ -200,6 +200,19 @@ const hexDigit: Parser<string>
 /** Match a single English letter or digit */
 const alphaNumeric: Parser<string>
 ```
+
+## Custom Parser
+
+```tsx
+const custom = new Parser((stream) => {
+  // ... logic
+  return new ParseSuccess(result, stream)
+  // or
+  return new ParseFailure(errorMessage, stream)
+})
+```
+
+All primitive parsers and combinators are built using these constructors, so you can look at those for examples.
 
 ## Examples
 

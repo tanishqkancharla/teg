@@ -7,4 +7,4 @@ import { sequence } from "./sequence"
 export const literal = <T extends string>(value: T): Parser<T> =>
 	sequence(value.split("").map(char))
 		.map(concat)
-		.withErrorScope(`literal (${value})`) as Parser<T>
+		.withErrorScope(`literal("${value}")`) as Parser<T>

@@ -1,7 +1,8 @@
 import { line, Parser, template, zeroOrMore } from "."
 import { assert } from "./assertUtils"
+import { outdent } from "./parseUtils"
 
-describe("Readme example tests", () => {
+describe("Readme examples", () => {
 	it("H1 Heading", () => {
 		/** Parse markdown level 1 headings */
 		const h1Parser = template`# ${line}`
@@ -16,18 +17,17 @@ describe("Readme example tests", () => {
 		assert(failResult.isFailure())
 		assert.strictEqual(
 			failResult.toString(),
-			`
-Parse Failure
+			outdent(`
+        Parse Failure
 
-|
-| not a heading
-| ^
+        | not a heading
+        | ^
 
-Failed at index 0: Char did not match "#"
-In middle of parsing char ("#") at 0
-In middle of parsing literal (# ) at 0
-In middle of parsing template at 0
-`
+        Failed at index 0: Char did not match "#"
+        In middle of parsing char("#") at 0
+        In middle of parsing literal("# ") at 0
+        In middle of parsing template(literal("# "), line, literal("")) at 0
+      `)
 		)
 	})
 

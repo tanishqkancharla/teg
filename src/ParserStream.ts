@@ -19,12 +19,12 @@ function printBeginningOfStream(contentLines: string[], row: number) {
 		const contentRows = contentLines
 			.slice(0, row + 1)
 			.map((line) => `| ${line}`)
-		return contentRows.join("\n")
+		return contentRows.join("\n") + "\n"
 	} else {
 		const contentRows = contentLines
 			.slice(row - 1, row + 1)
 			.map((line) => `| ${line}`)
-		return "| ...\n" + contentRows.join("\n")
+		return "| ...\n" + contentRows.join("\n") + "\n"
 	}
 }
 
@@ -33,7 +33,8 @@ function printEndOfStream(contentLines: string[], row: number) {
 
 	if (numRows - row <= 3) {
 		const contentRows = contentLines.slice(row + 1).map((line) => `| ${line}`)
-		return contentRows.join("\n")
+		if (contentRows.length === 0) return ""
+		return "\n" + contentRows.join("\n")
 	} else {
 		const contentRows = contentLines
 			.slice(row + 1, row + 3)
@@ -78,9 +79,7 @@ export class ParserStream {
 
 		return (
 			printBeginningOfStream(contentLines, row) +
-			"\n" +
 			marker +
-			"\n" +
 			printEndOfStream(contentLines, row)
 		)
 	}

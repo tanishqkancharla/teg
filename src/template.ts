@@ -29,10 +29,14 @@ export function template<ParserArray extends ReadonlyArray<Parser<any>>>(
 
 	parsers.push(literal(strings[strings.length - 1]))
 
+	const errorScope = `template(${parsers
+		.map((parser) => parser.errorScope)
+		.join(", ")})`
+
 	return (
 		sequence(parsers as any)
 			// Only select the non-string values
 			.map((values) => values.filter((_, index) => index % 2 === 1))
-			.withErrorScope("template") as any
+			.withErrorScope(errorScope) as any
 	)
 }
