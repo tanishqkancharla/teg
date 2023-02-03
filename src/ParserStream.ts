@@ -1,8 +1,53 @@
+function find2DIndex(contentLines: string[], linearIndex: number) {
+	let row = 0
+	let previousLength = 0
+	let currentLength = contentLines[0].length
+
+	while (currentLength < linearIndex) {
+		previousLength += contentLines[row].length
+		currentLength += contentLines[row + 1].length
+		row++
+	}
+
+	const col = linearIndex - previousLength
+
+	return [row, col]
+}
+
+function printBeginningOfStream(contentLines: string[], row: number) {
+	if (row <= 3) {
+		const contentRows = contentLines
+			.slice(0, row + 1)
+			.map((line) => `| ${line}`)
+		return contentRows.join("\n")
+	} else {
+		const contentRows = contentLines
+			.slice(row - 1, row + 1)
+			.map((line) => `| ${line}`)
+		return "| ...\n" + contentRows.join("\n")
+	}
+}
+
+function printEndOfStream(contentLines: string[], row: number) {
+	const numRows = contentLines.length
+
+	if (numRows - row <= 3) {
+		const contentRows = contentLines.slice(row + 1).map((line) => `| ${line}`)
+		return contentRows.join("\n")
+	} else {
+		const contentRows = contentLines
+			.slice(row + 1, row + 3)
+			.map((line) => `| ${line}`)
+
+		return contentRows.join("\n") + "\n| ..."
+	}
+}
+
 export class ParserStream {
 	constructor(
 		public content: string,
 		public index: number = 0,
-		private length: number = content.length
+		private length: number = content.length - index
 	) {}
 
 	isEmpty = () => {
@@ -27,11 +72,16 @@ export class ParserStream {
 	}
 
 	toString() {
-		const marker = " ".repeat(this.index) + "^"
-		const content = this.content.replace(/\n/g, "\\n")
+		const contentLines = this.content.split("\n")
+		const [row, col] = find2DIndex(contentLines, this.index)
+		const marker = `| ${" ".repeat(col)}^`
 
-		return `|
-| ${content}
-| ${marker}`
+		return (
+			printBeginningOfStream(contentLines, row) +
+			"\n" +
+			marker +
+			"\n" +
+			printEndOfStream(contentLines, row)
+		)
 	}
 }
