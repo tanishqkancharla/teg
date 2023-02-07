@@ -10,7 +10,6 @@
 		"lib": ["ES2018", "DOM"],
 		"outDir": "dist",
 		"declaration": true,
-		"emitDeclarationOnly": true,
 		"noImplicitAny": true,
 
 		"jsx": "react",
@@ -21,5 +20,5 @@
 		"skipLibCheck": true
 	},
 	"include": ["src/**/*.ts"],
-	"exclude": ["node_modules", "src/**/*.test.ts"]
+	"exclude": ["node_modules"]
 }

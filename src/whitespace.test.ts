@@ -1,14 +1,14 @@
-import { testParser } from "./testParser";
-import { whitespace } from "./whitespace";
+import { testParser } from "./testParser"
+import { whitespace } from "./whitespace"
 
 describe("whitespace", () => {
-	testParser("works", whitespace, " ", " ");
+	const test = testParser(whitespace)
 
-	testParser(
-		"works on multiple different types",
-		whitespace,
-		" \n\t \r \t hello",
-		" \n\t \r \t ",
-		false
-	);
-});
+	it("Works", () => {
+		test.parses(" ", " ")
+	})
+
+	it("Works on multiple different types", () => {
+		test.parsePartial(" \n\t \r \t hello", " \n\t \r \t ")
+	})
+})

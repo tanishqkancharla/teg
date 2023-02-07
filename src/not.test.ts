@@ -1,13 +1,15 @@
-import { char } from "./char";
-import { not } from "./not";
-import { testParser, testParserFails } from "./testParser";
+import { char } from "./char"
+import { not } from "./not"
+import { testParser } from "./testParser"
 
 describe("not", () => {
-	const parser = not(char("a"));
+	const parser = testParser(not(char("a")))
 
-	testParser("works", parser, "b", "b");
+	it("works", () => {
+		parser.parses("b", "b")
+	})
 
-	testParserFails("fails", parser, "a");
-
-	// const parserWithStr = not(str("ab"));
-});
+	it("fails on match", () => {
+		parser.fails("a")
+	})
+})

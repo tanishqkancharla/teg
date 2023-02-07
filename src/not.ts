@@ -1,6 +1,5 @@
-import { Parser } from "./Parser";
-import { ParseFailure, ParseSuccess } from "./ParseResult";
-import { isParseFailure } from "./parseUtils";
+import { Parser } from "./Parser"
+import { ParseFailure, ParseSuccess } from "./ParseResult"
 
 /**
  * Matches if the given parser fails.
@@ -9,16 +8,16 @@ import { isParseFailure } from "./parseUtils";
 export const not = (parser: Parser<any>): Parser<string> =>
 	new Parser((stream) => {
 		if (stream.isEmpty()) {
-			return new ParseFailure("Stream was emptied", stream);
+			return new ParseFailure("Stream was emptied", stream)
 		}
-		const result = parser.run(stream);
+		const result = parser.run(stream)
 
-		if (isParseFailure(result)) {
-			return new ParseSuccess(stream.head(), stream.move(1));
+		if (result.isFailure()) {
+			return new ParseSuccess(stream.head(), stream.move(1))
 		} else {
 			return new ParseFailure(
 				`Parser succeeded when it was supposed to fail`,
 				result.stream
-			);
+			)
 		}
-	}, "not");
+	}, "not")

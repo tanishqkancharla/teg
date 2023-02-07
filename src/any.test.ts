@@ -1,14 +1,26 @@
-import { any, end } from "./any";
-import { testParser, testParserFails } from "./testParser";
+import { any, end } from "./any"
+import { testParser } from "./testParser"
 
 describe("any", () => {
-	testParser("works", any, "Hi", "H", false);
+	const parser = testParser(any)
 
-	testParserFails("fails on empty", any, "");
-});
+	it("works", () => {
+		parser.parsePartial("Hi", "H")
+	})
+
+	it("fails on empty", () => {
+		parser.fails("")
+	})
+})
 
 describe("end", () => {
-	testParser("works", end, "", null);
+	const parser = testParser(end)
 
-	testParserFails("Fails on nonempty", end, "hi");
-});
+	it("works", () => {
+		parser.parses("", null)
+	})
+
+	it("Fails on nonempty", () => {
+		parser.fails("hi")
+	})
+})

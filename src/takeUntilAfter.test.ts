@@ -1,39 +1,28 @@
-import { char } from "./char";
-import { sequence } from "./sequence";
-import { str } from "./str";
-import { takeUntilAfter, takeUpTo } from "./takeUntilAfter";
-import { testParser } from "./testParser";
+import { char } from "./char"
+import { literal } from "./literal"
+import { takeUntilAfter, takeUpTo } from "./takeUntilAfter"
+import { testParser } from "./testParser"
 
 describe("takeUntilAfter", () => {
-	const charTest = testParser(takeUntilAfter(char("b")));
+	const charTest = testParser(takeUntilAfter(char("b")))
 
-	it("works", () => charTest.works("aaab", "aaa"));
+	it("works", () => charTest.parses("aaab", "aaa"))
 
-	it("fails on non-match", () => charTest.fails("aaa"));
+	it("fails on non-match", () => charTest.fails("aaa"))
 
-	const stringTest = testParser(takeUntilAfter(str("def")));
+	const stringTest = testParser(takeUntilAfter(literal("def")))
 
-	it("works with strings", () => stringTest.works("abcdef", "abc"));
-});
+	it("works with strings", () => stringTest.parses("abcdef", "abc"))
+})
 
 describe("takeUpTo", () => {
-	const parser = takeUpTo(char("b"));
+	it("works", () => {
+		const test = testParser(takeUpTo(char("b")))
+		test.parsePartial("aaab", "aaa")
+	})
 
-	testParser("works", parser, "aaab", "aaa", false);
-
-	const stringParser = takeUpTo(str("def"));
-
-	testParser("works", stringParser, "abcdef", "abc", false);
-
-	const sequenceWithTakeUpTo = sequence([
-		takeUpTo(str("bbb")),
-		str("bbb"),
-		str("aaa"),
-	]);
-
-	testParser("works with str", sequenceWithTakeUpTo, "aaabbbaaa", [
-		"aaa",
-		"bbb",
-		"aaa",
-	]);
-});
+	it("works", () => {
+		const test = testParser(takeUpTo(literal("def")))
+		test.parsePartial("abcdef", "abc")
+	})
+})

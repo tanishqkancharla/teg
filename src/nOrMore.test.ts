@@ -1,53 +1,56 @@
-import { char } from "./char";
-import { nOrMore, zeroOrMore } from "./nOrMore";
-import { str } from "./str";
-import { testParser, testParserFails } from "./testParser";
+import { char } from "./char"
+import { literal } from "./literal"
+import { nOrMore, zeroOrMore } from "./nOrMore"
+import { testParser } from "./testParser"
 
 describe("nOrMore", () => {
-	const parser = nOrMore(3, char("a"));
+	const parser = testParser(nOrMore(3, char("a")))
 
-	testParser("works", parser, "aaaa", ["a", "a", "a", "a"]);
+	it("works", () => {
+		parser.parses("aaaa", ["a", "a", "a", "a"])
+	})
 
-	testParser("works when n is equal", parser, "aaa", ["a", "a", "a"]);
+	it("works when n is equal", () => {
+		parser.parses("aaa", ["a", "a", "a"])
+	})
 
-	testParserFails("fails when n is less", parser, "aa");
+	it("fails when n is less", () => {
+		parser.fails("aa")
+	})
 
-	const parserWithDelim = nOrMore(3, char("a"), char("b"));
+	const parserWithDelim = testParser(nOrMore(3, char("a"), char("b")))
 
-	testParser("Works when delimited", parserWithDelim, "ababa", ["a", "a", "a"]);
+	it("Works with delimiter", () => {
+		parserWithDelim.parses("ababa", ["a", "a", "a"])
+	})
 
-	testParser(
-		"Rolls back when stream ends at a delimiter",
-		parserWithDelim,
-		"ababab",
-		["a", "a", "a"],
-		false
-	);
+	it("Rolls back when stream ends at a delimiter", () => {
+		parserWithDelim.parsePartial("ababab", ["a", "a", "a"])
+	})
 
-	testParserFails("Fails when delimiter not present", parserWithDelim, "abaa");
-});
+	it("Fails when delimiter not present", () => {
+		parserWithDelim.fails("abaa")
+	})
+})
 
 describe("zeroOrMore", () => {
 	describe("Single character", () => {
-		const parser = zeroOrMore(char("a"));
+		const parser = testParser(zeroOrMore(char("a")))
 
-		testParser("works", parser, "aaaa", ["a", "a", "a", "a"]);
-
-		testParser("succeeds when empty", parser, "", []);
-	});
+		it("Works", () => parser.parses("aaaa", ["a", "a", "a", "a"]))
+		it("Succeeds when empty", () => parser.parses("", []))
+	})
 
 	describe("Multiple characters", () => {
-		const parser = zeroOrMore(str("abba"));
+		const parser = testParser(zeroOrMore(literal("abba")))
 
-		testParser("works", parser, "abba", ["abba"]);
+		it("Works", () => parser.parses("abba", ["abba"]))
+		it("Succeeds when empty", () => parser.parses("", []))
 
-		testParser("succeeds when empty", parser, "", []);
+		const parserWithDelim = testParser(zeroOrMore(literal("abba"), char("C")))
 
-		const parserWithDelim = zeroOrMore(str("abba"), char("C"));
-
-		testParser("Works when delimited", parserWithDelim, "abbaCabba", [
-			"abba",
-			"abba",
-		]);
-	});
-});
+		it("Works when delimited", () => {
+			parserWithDelim.parses("abbaCabba", ["abba", "abba"])
+		})
+	})
+})

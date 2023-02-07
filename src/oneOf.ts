@@ -1,6 +1,6 @@
-import { Parser } from "./Parser";
-import { ParseFailure, ParseSuccess } from "./ParseResult";
-import { ParserTokenArray } from "./parseUtils";
+import { Parser } from "./Parser"
+import { ParseFailure, ParseSuccess } from "./ParseResult"
+import { ParserTokenArray } from "./parseUtils"
 
 /** Matches exactly one of the given parsers, checked in the given order */
 export const oneOf = <ParserArray extends Parser<any>[]>(
@@ -8,12 +8,12 @@ export const oneOf = <ParserArray extends Parser<any>[]>(
 ): Parser<ParserTokenArray<ParserArray>[number]> =>
 	new Parser((stream) => {
 		for (const parser of parsers) {
-			const result = parser.run(stream);
+			const result = parser.run(stream)
 
 			if (result instanceof ParseSuccess) {
-				return result;
+				return result
 			}
 		}
 
-		return new ParseFailure("Didn't match any of the given parsers", stream);
-	}, "oneOf");
+		return new ParseFailure("Didn't match any of the given parsers", stream)
+	}, "oneOf")
