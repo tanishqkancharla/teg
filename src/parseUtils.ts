@@ -39,12 +39,15 @@ export type FixedSizeArray<N extends number, T> = N extends 0
 
 // How many spaces to count in a tab (project-level config)
 const tabToSpaces = 2
+const spaceForTab = " ".repeat(tabToSpaces)
 
 function convertTabsToSpaces(line: string) {
-	return line.replace(/\t/g, " ".repeat(tabToSpaces))
+	return line.replace(/\t/g, spaceForTab)
 }
 
 function getIndentCount(line: string) {
+	// Ignore empty lines
+	if (line === "") return Number.POSITIVE_INFINITY
 	let indent = 0
 
 	for (const char of line) {
@@ -62,7 +65,7 @@ function getIndentCount(line: string) {
  * Achieves the same thing as https://www.npmjs.com/package/outdent, but a little cleaner
  */
 export function outdent(contents: string) {
-	let lines = contents.split("\n").map(convertTabsToSpaces)
+	let lines = convertTabsToSpaces(contents).split("\n")
 
 	// Ignore all-whitespace lines at the beginning and end
 	// (which are common in template literals)

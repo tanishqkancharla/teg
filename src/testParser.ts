@@ -1,5 +1,7 @@
 import { assert, assertEqual } from "./assertUtils"
 import { Parser } from "./Parser"
+import { outdent } from "./parseUtils"
+export { outdent }
 
 class ParseTester<T> {
 	constructor(private parser: Parser<T>) {}

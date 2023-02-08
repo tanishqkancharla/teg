@@ -1,16 +1,14 @@
 {
-	"name": "teg-examples",
-	"license": "MIT",
-	"type": "module",
-	"devDependencies": {
-		"@jest/types": "^29.1.2",
-		"jest": "^29.1.2",
-		"ts-node": "^10.9.1"
-	},
-	"dependencies": {
-		"teg-parser": "file:.."
-	},
-	"scripts": {
-		"test": "jest --verbose"
-	}
+  "name": "teg-parser-examples",
+  "version": "0.0.1",
+  "description": "Examples for the teg-parser package",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "teg-parser": "file:.."
+  }
 }

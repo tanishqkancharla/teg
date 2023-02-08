@@ -10,6 +10,7 @@
 		"lib": ["ES2018", "DOM"],
 		"outDir": "dist",
 		"declaration": true,
+		"emitDeclarationOnly": true,
 		"noImplicitAny": true,
 
 		"jsx": "react",

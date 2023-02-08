@@ -40,7 +40,7 @@ function printEndOfStream(contentLines: string[], row: number) {
 			.slice(row + 1, row + 3)
 			.map((line) => `| ${line}`)
 
-		return contentRows.join("\n") + "\n| ..."
+		return "\n" + contentRows.join("\n") + "\n| ..."
 	}
 }
 

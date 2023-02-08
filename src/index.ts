@@ -3,6 +3,7 @@ import {
 	digit,
 	hexDigit,
 	integer,
+	letter,
 	lower,
 	upper,
 	word,
@@ -22,10 +23,11 @@ import { ParserStream } from "./ParserStream"
 import { sequence } from "./sequence"
 import { takeUntilAfter, takeUpTo } from "./takeUntilAfter"
 import { template } from "./template"
+import { whitespace } from "./whitespace"
 
 // Utils, types
 export { Parser, ParseFailure, ParseResult, ParseSuccess, ParserStream }
-// Parsers
+// Combinators
 export {
 	literal,
 	nOrMore,
@@ -41,8 +43,11 @@ export {
 	not,
 	char,
 }
+// Parsers
 export {
 	line,
+	letter,
+	whitespace,
 	lower,
 	upper,
 	digit,
