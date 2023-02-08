@@ -75,6 +75,20 @@ Since it's written in typescript, types are inferred as much as possible.
 
 Much of the idea comes from [Chet Corcos's article on parsers](https://medium.com/@chetcorcos/introduction-to-parsers-644d1b5d7f3d). Although `Parser`s currently implement `bimap`, `fold`, and `chain` methods as described in the article, I haven't found them as useful in real-world usage, and may remove them or change them.
 
+## Examples
+
+There are some examples available in the `examples` directory. It's TODO to build out more; help out if you want!
+
+- [x] Markdown
+- [x] CLI args
+- [ ] Unordered list
+- [ ] JSON
+- [ ] LaTeX
+
+You can also see an example of a bigger parser I use for my custom blog post format here: [https://github.com/tanishqkancharla/tk-parser/blob/main/src/index.ts](https://github.com/tanishqkancharla/tk-parser/blob/main/src/index.ts) (although it's using an older version of teg right now).
+
+# API
+
 ## Combinators
 
 ```tsx
@@ -213,10 +227,6 @@ const custom = new Parser((stream) => {
 ```
 
 All primitive parsers and combinators are built using these constructors, so you can look at those for examples.
-
-## Examples
-
-TODO to build out more example parsers. However, you can see an example of a bigger parser I use for my custom blog post format here: [https://github.com/tanishqkancharla/tk-parser/blob/main/src/index.ts](https://github.com/tanishqkancharla/tk-parser/blob/main/src/index.ts)
 
 ## Testing parsers
 
