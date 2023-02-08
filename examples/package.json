@@ -1,6 +1,6 @@
 {
   "name": "teg-parser-examples",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Examples for the teg-parser package",
   "main": "index.js",
   "scripts": {
