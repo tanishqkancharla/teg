@@ -1,6 +1,6 @@
 {
 	"name": "teg-parser",
-	"version": "0.14.0",
+	"version": "0.15.0",
 	"author": "Tanishq Kancharla <tanishqkancharla3@gmail.com>",
 	"description": "A tiny parser framework",
 	"main": "./dist/index.cjs",
