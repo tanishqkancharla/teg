@@ -1,9 +1,9 @@
-import { char } from "./char"
 import { maybe } from "./maybe"
 import { testParser } from "./testParser"
+import { text } from "./text"
 
 describe("maybe", () => {
-	const parser = testParser(maybe(char("a")))
+	const parser = testParser(maybe(text("a")))
 
 	it("works", () => {
 		parser.parses("a", "a")

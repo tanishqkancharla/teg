@@ -1,9 +1,9 @@
-import { char } from "./char"
 import { oneOf } from "./oneOf"
 import { testParser } from "./testParser"
+import { text } from "./text"
 
 describe("oneOf", () => {
-	const parser = testParser(oneOf([char("a"), char("b"), char("c")]))
+	const parser = testParser(oneOf([text("a"), text("b"), text("c")]))
 
 	it("works", () => {
 		parser.parses("a", "a")

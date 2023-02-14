@@ -68,7 +68,7 @@ export function outdent(contents: string) {
 	let lines = convertTabsToSpaces(contents).split("\n")
 
 	// Ignore all-whitespace lines at the beginning and end
-	// (which are common in template literals)
+	// (which are common in template texts)
 	if (lines[0].trim() === "") {
 		lines = lines.slice(1)
 	}

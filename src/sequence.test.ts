@@ -1,9 +1,9 @@
-import { char } from "./char"
 import { sequence } from "./sequence"
 import { testParser } from "./testParser"
+import { text } from "./text"
 
 describe("sequence", () => {
-	const parser = testParser(sequence([char("a"), char("b"), char("c")]))
+	const parser = testParser(sequence([text("a"), text("b"), text("c")]))
 
 	it("works", () => {
 		parser.parses("abc", ["a", "b", "c"])

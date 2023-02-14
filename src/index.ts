@@ -9,9 +9,7 @@ import {
 	word,
 } from "./alphanumeric"
 import { any, end } from "./any"
-import { char } from "./char"
 import { line } from "./line"
-import { literal } from "./literal"
 import { lookahead } from "./lookahead"
 import { maybe } from "./maybe"
 import { nOrMore, oneOrMore, zeroOrMore } from "./nOrMore"
@@ -23,13 +21,14 @@ import { ParserStream } from "./ParserStream"
 import { sequence } from "./sequence"
 import { takeUntilAfter, takeUpTo } from "./takeUntilAfter"
 import { template } from "./template"
+import { text } from "./text"
 import { whitespace } from "./whitespace"
 
 // Utils, types
 export { Parser, ParseFailure, ParseResult, ParseSuccess, ParserStream }
 // Combinators
 export {
-	literal,
+	text,
 	nOrMore,
 	zeroOrMore,
 	oneOrMore,
@@ -41,7 +40,6 @@ export {
 	takeUpTo,
 	template,
 	not,
-	char,
 }
 // Parsers
 export {

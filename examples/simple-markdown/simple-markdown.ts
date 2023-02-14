@@ -52,14 +52,10 @@ type Image = {
 	alt: string
 }
 
-const imageAlt = teg
-	.oneOrMore(teg.oneOf([teg.word, teg.literal(" ")]))
-	.map(concat)
+const imageAlt = teg.oneOrMore(teg.oneOf([teg.word, teg.text(" ")])).map(concat)
 
 const imageSrc = teg
-	.oneOrMore(
-		teg.oneOf([teg.word, teg.literal("/"), teg.literal(":"), teg.literal(".")])
-	)
+	.oneOrMore(teg.oneOf([teg.word, teg.text("/"), teg.text(":"), teg.text(".")]))
 	.map(concat)
 
 export const image: teg.Parser<Image> =
@@ -72,7 +68,7 @@ type Divider = {
 }
 
 export const divider: teg.Parser<Divider> = teg
-	.literal("---\n")
+	.text("---\n")
 	.map(() => ({ type: "divider" }))
 
 type Block = Heading | Paragraph | Image | Divider

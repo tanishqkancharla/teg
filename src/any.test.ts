@@ -2,25 +2,25 @@ import { any, end } from "./any"
 import { testParser } from "./testParser"
 
 describe("any", () => {
-	const parser = testParser(any)
+	const test = testParser(any)
 
 	it("works", () => {
-		parser.parsePartial("Hi", "H")
+		test.parsePartial("Hi", "H")
 	})
 
 	it("fails on empty", () => {
-		parser.fails("")
+		test.fails("")
 	})
 })
 
 describe("end", () => {
-	const parser = testParser(end)
+	const test = testParser(end)
 
 	it("works", () => {
-		parser.parses("", null)
+		test.parses("", null)
 	})
 
 	it("Fails on nonempty", () => {
-		parser.fails("hi")
+		test.fails("hi")
 	})
 })

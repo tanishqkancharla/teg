@@ -10,7 +10,7 @@ import { template } from "./template"
  * Returns all the characters that were consumed before the parser succeded.
  *
  * @example
- * `takeUntilAfter(char("\n"))` takes until after the newline but
+ * `takeUntilAfter(text("\n"))` takes until after the newline but
  * doesn't include the newline itself in the result
  */
 export const takeUntilAfter = <T>(parser: Parser<T>): Parser<string> =>
@@ -21,7 +21,7 @@ export const takeUntilAfter = <T>(parser: Parser<T>): Parser<string> =>
  * Returns all the characters that were consumed before the parser succeded.
  *
  * @example
- * `takeUpTo(char("\n"))` takes all chars until before the newline
+ * `takeUpTo(text("\n"))` takes all chars until before the newline
  */
 export const takeUpTo = <T>(parser: Parser<T>): Parser<string> =>
 	template`${zeroOrMore(not(parser))}${lookahead(parser)}`

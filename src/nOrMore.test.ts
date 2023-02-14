@@ -1,10 +1,9 @@
-import { char } from "./char"
-import { literal } from "./literal"
 import { nOrMore, zeroOrMore } from "./nOrMore"
 import { testParser } from "./testParser"
+import { text } from "./text"
 
 describe("nOrMore", () => {
-	const parser = testParser(nOrMore(3, char("a")))
+	const parser = testParser(nOrMore(3, text("a")))
 
 	it("works", () => {
 		parser.parses("aaaa", ["a", "a", "a", "a"])
@@ -18,7 +17,7 @@ describe("nOrMore", () => {
 		parser.fails("aa")
 	})
 
-	const parserWithDelim = testParser(nOrMore(3, char("a"), char("b")))
+	const parserWithDelim = testParser(nOrMore(3, text("a"), text("b")))
 
 	it("Works with delimiter", () => {
 		parserWithDelim.parses("ababa", ["a", "a", "a"])
@@ -35,19 +34,19 @@ describe("nOrMore", () => {
 
 describe("zeroOrMore", () => {
 	describe("Single character", () => {
-		const parser = testParser(zeroOrMore(char("a")))
+		const parser = testParser(zeroOrMore(text("a")))
 
 		it("Works", () => parser.parses("aaaa", ["a", "a", "a", "a"]))
 		it("Succeeds when empty", () => parser.parses("", []))
 	})
 
 	describe("Multiple characters", () => {
-		const parser = testParser(zeroOrMore(literal("abba")))
+		const parser = testParser(zeroOrMore(text("abba")))
 
 		it("Works", () => parser.parses("abba", ["abba"]))
 		it("Succeeds when empty", () => parser.parses("", []))
 
-		const parserWithDelim = testParser(zeroOrMore(literal("abba"), char("C")))
+		const parserWithDelim = testParser(zeroOrMore(text("abba"), text("C")))
 
 		it("Works when delimited", () => {
 			parserWithDelim.parses("abbaCabba", ["abba", "abba"])

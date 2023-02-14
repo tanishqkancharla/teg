@@ -72,7 +72,7 @@ export function cliConfig(): CliConfigBuilder {
 }
 
 const whitespace = teg.oneOrMore(
-	teg.oneOf([teg.literal(" "), teg.literal("\t"), teg.literal("\n")])
+	teg.oneOf([teg.text(" "), teg.text("\t"), teg.text("\n")])
 )
 
 type ParsedCliOptions = {
@@ -83,15 +83,15 @@ export function cliParser(config: CliConfig): teg.Parser<ParsedCliOptions> {
 	const flagParsers = config.flags.map((flag) =>
 		teg
 			.oneOf([
-				teg.template`--${teg.literal(flag)}`,
-				teg.template`-${teg.literal(flag)}`,
+				teg.template`--${teg.text(flag)}`,
+				teg.template`-${teg.text(flag)}`,
 			])
 			.map(() => ({ type: "flag" as const, flag }))
 	)
 
 	const keyValueParsers = config.keyValue.map(({ key, options }) => {
-		const keyParser = teg.literal(key)
-		const optionsParser = teg.oneOf(options.map(teg.literal))
+		const keyParser = teg.text(key)
+		const optionsParser = teg.oneOf(options.map(teg.text))
 		return teg.template`--${keyParser}=${optionsParser}`.map(([key, value]) => {
 			return { type: "keyValue" as const, key, value }
 		})

@@ -43,9 +43,9 @@ Parse Failure
 | ^
 
 Failed at index 0: Char did not match "#"
-In middle of parsing char("#") at 0
-In middle of parsing literal("# ") at 0
-In middle of parsing template(literal("# "), line, literal("")) at 0
+In middle of parsing text("#") at 0
+In middle of parsing text("# ") at 0
+In middle of parsing template(text("# "), line, text("")) at 0
  */
 ```
 
@@ -92,19 +92,18 @@ You can also see an example of a bigger parser I use for my custom blog post for
 ## Combinators
 
 ```tsx
-/** Matches a literal string */
-export const literal = <T extends string>(value: T) => Parser<T>
+/** Matches a text string */
+export const text = <T extends string>(value: T) => Parser<T>
 ```
-
 ```tsx
 /**
- * Tagged template literal for parsing.
+ * Tagged template text for parsing.
  *
  * "template`# ${line}`" will parse "# Heading" to ["Heading"]
  *
  * Can use multiple parsers together. Keep in mind parsers run greedily,
  * so "template`${word}content`" will fail on "textcontent" b/c the `word` parser
- * will match "textcontent", and then it will try to match the literal "content"
+ * will match "textcontent", and then it will try to match the text "content"
  */
 export const template
 ```
@@ -139,7 +138,7 @@ const oneOf: <ParserArray extends Parser<any>[]>(
  * Match the given parsers in sequence
  *
  * @example
- * sequence([char("a"), char("b"), char("c")]) => Parser<"abc">
+ * sequence([text("a"), text("b"), text("c")]) => Parser<"abc">
  */
 const sequence: (
 	parsers: Parser[],
@@ -166,7 +165,7 @@ const maybe: <T>(parser: Parser<T>) => Parser<T | undefined>
  * Returns all the characters that were consumed before the parser succeded.
  *
  * @example
- * `takeUntilAfter(char("\n"))` takes until after the newline but
+ * `takeUntilAfter(text("\n"))` takes until after the newline but
  * doesn't include the newline itself in the result
  */
 const takeUntilAfter: <T>(parser: Parser<T>) => Parser<string>
@@ -175,7 +174,7 @@ const takeUntilAfter: <T>(parser: Parser<T>) => Parser<string>
  * Returns all the characters that were consumed before the parser succeded.
  *
  * @example
- * `takeUpTo(char("\n"))` takes all chars until before the newline
+ * `takeUpTo(text("\n"))` takes all chars until before the newline
  */
 export const takeUpTo: <T>(parser: Parser<T>): Parser<string>
 ```
@@ -187,7 +186,7 @@ export const takeUpTo: <T>(parser: Parser<T>): Parser<string>
  * Takes the first sentence in the stream
  * i.e. up to (and including) the first newline
  */
-const line = takeUntilAfter(char("\n"));
+const line = takeUntilAfter(text("\n"));
 
 /** Matches a single lowercase English letter */
 const lower: Parser<string>

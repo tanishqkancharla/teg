@@ -3,7 +3,7 @@ import { ParseSuccess } from "./ParseResult"
 import { FixedSizeArray, ParserTokenArray } from "./parseUtils"
 
 // This overload is what lets sequence type the parser when passed in
-// a constant array like `[char("a"),char("b"),char("c")]`
+// a constant array like `[text("a"),text("b"),text("c")]`
 export function sequence<
 	N extends number,
 	ParserArray extends FixedSizeArray<N, Parser<any>>,
@@ -26,7 +26,7 @@ export function sequence<
  * Match the given parsers in sequence (or fail)
  *
  * @example
- * sequence([char("a"), char("b"), char("c")]) // Matches "abc"
+ * sequence([text("a"), text("b"), text("c")]) // Matches "abc"
  */
 export function sequence<
 	N extends number,
